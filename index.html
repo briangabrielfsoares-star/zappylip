@@ -18,10 +18,6 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="description" content="Zappylip — produtos baratos de verdade.">
-<script>
-const CLOUDINARY_CLOUD_NAME="nvpoyzms";
-const CLOUDINARY_UPLOAD_PRESET="zappylip_upload";
-</script>
 <style>
 :root{
   --brand:#ff5a1f;--brand2:#ff7b4d;--bg:#f4f5f7;--card:#ffffff;--text:#1f2328;
@@ -99,6 +95,15 @@ const firebaseAuth=firebase.auth();
 const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL="https://hkoqdlinuhnywznqfdgz.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_vosTdg2ZwXWOSC_9SB4pVw_q3SFuQT7";
+const SUPABASE_BUCKET="media";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+</script>
+
 </head>
 <body>
 <div id="cloudStatus" style="position:fixed;right:10px;bottom:76px;z-index:9999;padding:7px 10px;border-radius:999px;background:#166534;color:white;font-size:11px;font-weight:800;box-shadow:0 4px 16px #0003">● Firebase protegido</div>
@@ -139,7 +144,7 @@ const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
     <button class="btn danger" onclick="logoutAdmin()">Sair do ADM</button>
   </div>
   <input type="file" id="importFile" accept=".json" hidden onchange="importBackup(event)">
-  <p class="notice">Fotos e vídeos enviados pelo painel vão para o Cloudinary e recebem links públicos. Os dados do produto ainda ficam salvos neste navegador.</p>
+  <p class="notice">Fotos e vídeos enviados pelo painel vão para o Supabase Storage e recebem links públicos. Os dados do produto ainda ficam salvos neste navegador.</p>
 </section>
 
 <div class="categories" id="categories"></div>
@@ -165,7 +170,7 @@ const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
 <div class="overlay" id="editorOverlay"><div class="sheet">
   <h3 id="editorTitle">Adicionar produto</h3>
   <input type="hidden" id="productId">
-  <div class="storage-info">As fotos e vídeos enviados aqui serão armazenados no Cloudinary e receberão links públicos.</div>
+  <div class="storage-info">As fotos e vídeos enviados aqui serão armazenados no Supabase Storage e receberão links públicos.</div>
   <div class="field"><label>Fotos do produto — até 8</label><input type="file" id="productImages" accept="image/*" multiple onchange="uploadProductImages()"></div>
   <button type="button" class="cloud-btn" onclick="uploadProductImages()">☁ Reenviar fotos selecionadas</button>
   <div id="productUploadStatus" class="upload-status hidden"></div>
@@ -616,16 +621,27 @@ function clearVideoLinks(){
 
 
 
-async function uploadToCloudinary(file,resourceType="auto"){
-  const endpoint=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
-  const form=new FormData();
-  form.append("file",file);
-  form.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
-  const response=await fetch(endpoint,{method:"POST",body:form});
-  const data=await response.json();
-  if(!response.ok)throw new Error(data?.error?.message||`Falha no upload (${response.status}).`);
-  return data;
+
+function safeFileName(name){
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-zA-Z0-9._-]/g,"-")
+    .replace(/-+/g,"-");
 }
+async function uploadToSupabase(file,folder="products"){
+  const ext=(file.name.split(".").pop()||"bin").toLowerCase();
+  const baseName=safeFileName(file.name.replace(/\.[^/.]+$/,""))||"arquivo";
+  const filePath=`${folder}/${Date.now()}-${Math.random().toString(36).slice(2,8)}-${baseName}.${ext}`;
+  const {error}=await supabaseClient.storage
+    .from(SUPABASE_BUCKET)
+    .upload(filePath,file,{cacheControl:"3600",upsert:false,contentType:file.type||undefined});
+  if(error)throw new Error(error.message||"Falha no upload.");
+  const {data}=supabaseClient.storage.from(SUPABASE_BUCKET).getPublicUrl(filePath);
+  if(!data?.publicUrl)throw new Error("Não foi possível gerar o link público.");
+  return data.publicUrl;
+}
+
 function setUploadStatus(id,text,error=false){
   const el=$(id);if(!el)return;
   el.classList.remove("hidden");
@@ -642,8 +658,8 @@ async function uploadProductImages(){
     const urls=[];
     for(let i=0;i<files.length;i++){
       setUploadStatus("productUploadStatus",`Enviando ${i+1} de ${files.length}...`);
-      const result=await uploadToCloudinary(files[i],"image");
-      urls.push(result.secure_url);
+      const url=await uploadToSupabase(files[i],"products/images");
+      urls.push(url);
     }
     $("imageUrls").value=[...existing,...urls].join("\n");
     editorImages=[...existing,...urls];
@@ -663,8 +679,8 @@ async function uploadProductVideos(){
     const urls=[];
     for(let i=0;i<files.length;i++){
       setUploadStatus("videoUploadStatus",`Enviando ${i+1} de ${files.length}...`);
-      const result=await uploadToCloudinary(files[i],"video");
-      urls.push(result.secure_url);
+      const url=await uploadToSupabase(files[i],"products/videos");
+      urls.push(url);
     }
     $("videoUrls").value=[...existing,...urls].join("\n");
     $("productVideos").value="";
@@ -737,9 +753,9 @@ async function uploadDesignMedia(type){
   if(!file)return alert("Escolha uma imagem.");
   try{
     setUploadStatus("designUploadStatus","Enviando imagem...");
-    const result=await uploadToCloudinary(file,"image");
-    if(type==="logo")design.logo=result.secure_url;
-    else design.heroImage=result.secure_url;
+    const url=await uploadToSupabase(file,type==="logo"?"design/logo":"design/banner");
+    if(type==="logo")design.logo=url;
+    else design.heroImage=url;
     persistSmall();applyDesign();input.value="";
     setUploadStatus("designUploadStatus","Imagem enviada e aplicada com sucesso.");
   }catch(err){
