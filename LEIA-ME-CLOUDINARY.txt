@@ -1,0 +1,18 @@
+ZAPPYLIP + CLOUDINARY
+
+Cloud name: nvpoyzms
+Upload preset: dqqmdkff
+
+PUBLICAÇÃO
+1. Extraia o ZIP.
+2. Publique todos os arquivos no mesmo projeto do Netlify.
+3. Abra o site em aba anônima ou pressione Ctrl+F5.
+4. Painel ADM > Adicionar produto.
+5. Escolha as fotos e clique em Enviar fotos para a nuvem.
+6. Aguarde a mensagem de sucesso e depois clique em Salvar.
+
+As mídias ficam online e podem ser abertas em qualquer aparelho.
+
+ATENÇÃO
+Este ZIP coloca fotos e vídeos online. Produtos, estoque e cupons ainda ficam no navegador atual.
+Para sincronizar todo o catálogo automaticamente entre aparelhos, será necessário um banco online.

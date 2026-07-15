@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Versão inicial para testes. Trocar por autenticação administrativa antes de divulgar amplamente.
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+    match /app/{documentId} {
+      allow read, write: if true;
+    }
+  }
+}

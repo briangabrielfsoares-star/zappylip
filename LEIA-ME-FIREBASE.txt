@@ -1,0 +1,24 @@
+ZAPPYLIP + FIREBASE
+
+Esta versão conecta:
+- produtos
+- preços
+- estoque
+- cupons
+- configurações da loja
+- design
+- pedidos e mensagens
+
+As alterações aparecem em outros aparelhos conectados à internet.
+
+PUBLICAÇÃO
+1. Extraia este ZIP.
+2. Arraste a pasta completa para o mesmo projeto no Netlify.
+3. Abra o site.
+4. Entre no painel ADM e salve um produto.
+5. Abra o site em outro celular ou aba para conferir.
+
+IMPORTANTE
+O Firestore precisa estar criado e temporariamente em MODO DE TESTE.
+As regras de teste expiram. Antes de divulgar a loja, será necessário adicionar login administrativo e regras seguras.
+Fotos e vídeos continuam sendo enviados ao Cloudinary.

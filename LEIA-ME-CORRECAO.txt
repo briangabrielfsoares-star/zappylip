@@ -1,0 +1,12 @@
+CORREÇÃO DO UPLOAD CLOUDINARY
+
+Esta versão remove o teste automático que estava bloqueando o envio antes mesmo de usar a foto real.
+
+Agora:
+1. Selecione a foto.
+2. O site envia a própria foto diretamente.
+3. Aguarde a mensagem de sucesso.
+4. Clique em Salvar.
+
+Cloud name: nvpoyzms
+Upload preset: dqqmdkff

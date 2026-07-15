@@ -1,0 +1,22 @@
+ZAPPYLIP — MÍDIA UNIVERSAL
+
+O que esta versão faz:
+- Upload automático ao selecionar fotos ou vídeos.
+- As mídias são enviadas ao Cloudinary.
+- Os links ficam públicos e podem abrir em qualquer celular ou PC.
+- Não usa service worker, evitando versões antigas presas em cache.
+- Possui teste automático da conexão com o Cloudinary.
+- Mantém os botões para apagar todos os links.
+
+Como publicar:
+1. Extraia o ZIP.
+2. Envie todos os arquivos para o mesmo projeto no Netlify.
+3. Abra o site.
+4. No painel ADM, edite ou adicione um produto.
+5. Selecione as fotos ou vídeos.
+6. Aguarde a mensagem de sucesso.
+7. Clique em Salvar.
+
+Importante:
+As fotos e vídeos ficam universais.
+Os dados dos produtos, estoque e cupons ainda ficam no navegador enquanto não houver banco online.
