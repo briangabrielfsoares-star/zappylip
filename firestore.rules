@@ -1,12 +1,34 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Versão inicial para testes. Trocar por autenticação administrativa antes de divulgar amplamente.
-    match /products/{productId} {
-      allow read, write: if true;
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == "briangabrielfsoares@gmail.com";
     }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
     match /app/{documentId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /orders/{orderId} {
+      allow create: if
+        request.resource.data.id is int
+        && request.resource.data.user is string
+        && request.resource.data.items is list
+        && request.resource.data.total is number
+        && request.resource.data.status == "Aguardando confirmação";
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

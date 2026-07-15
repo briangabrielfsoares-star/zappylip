@@ -82,6 +82,7 @@ header{position:sticky;top:0;z-index:40;padding:12px;color:#fff;background:linea
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script>
 const firebaseConfig={
   apiKey:"AIzaSyCHoY3PkyCskmabmOia9oxrxKZSIbylGOo",
@@ -94,11 +95,13 @@ const firebaseConfig={
 };
 firebase.initializeApp(firebaseConfig);
 const cloudDB=firebase.firestore();
+const firebaseAuth=firebase.auth();
+const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
 </script>
 
 </head>
 <body>
-<div id="cloudStatus" style="position:fixed;right:10px;bottom:76px;z-index:9999;padding:7px 10px;border-radius:999px;background:#166534;color:white;font-size:11px;font-weight:800;box-shadow:0 4px 16px #0003">● Banco online</div>
+<div id="cloudStatus" style="position:fixed;right:10px;bottom:76px;z-index:9999;padding:7px 10px;border-radius:999px;background:#166534;color:white;font-size:11px;font-weight:800;box-shadow:0 4px 16px #0003">● Firebase protegido</div>
 <header>
   <div class="toprow">
     <div class="brandbox"><img class="logo" id="brandLogo" src="icon-192.png" alt="Logo" onerror="this.onerror=null;this.src='icon-192.png'"><div><div class="brand" id="brandName">zappylip</div><div class="tag" id="brandTag">Produtos baratos de verdade</div></div></div>
@@ -152,8 +155,11 @@ const cloudDB=firebase.firestore();
 
 <div class="overlay" id="adminLogin"><div class="sheet">
   <h3>Entrar no Painel ADM</h3>
-  <div class="field"><label>Senha</label><input type="password" id="adminPassword"></div>
-  <div class="actions"><button class="btn secondary" onclick="closeOverlay('adminLogin')">Cancelar</button><button class="btn primary" onclick="checkAdmin()">Entrar</button></div>
+  <p style="font-size:12px;color:var(--muted)">Somente o administrador autorizado pode editar a loja.</p>
+  <div class="field"><label>E-mail administrativo</label><input type="email" id="adminEmail" value="briangabrielfsoares@gmail.com" autocomplete="username"></div>
+  <div class="field"><label>Senha do Firebase</label><input type="password" id="adminPassword" autocomplete="current-password"></div>
+  <div id="adminLoginStatus" class="upload-status hidden"></div>
+  <div class="actions"><button class="btn secondary" onclick="closeOverlay('adminLogin')">Cancelar</button><button class="btn primary" onclick="checkAdmin()">Entrar com segurança</button></div>
 </div></div>
 
 <div class="overlay" id="editorOverlay"><div class="sheet">
@@ -296,7 +302,6 @@ const cloudDB=firebase.firestore();
 <div class="overlay" id="ordersOverlay"><div class="sheet" id="ordersSheet"></div></div>
 <div class="overlay" id="chatOverlay"><div class="sheet" id="chatSheet"></div></div>
 <script>
-const ADMIN_PASSWORD="87759129Br**";
 const DB_NAME="zappylip_database",DB_VERSION=1,PRODUCT_STORE="products";
 const $=id=>document.getElementById(id);
 const placeholder=(emoji,label,a,b)=>"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="800" height="800" fill="url(#g)"/><text x="400" y="390" text-anchor="middle" font-size="170">${emoji}</text><text x="400" y="620" text-anchor="middle" font-family="Arial" font-size="46" fill="white" font-weight="700">${label}</text></svg>`);
@@ -329,7 +334,7 @@ coupons=coupons.map(c=>({
   active:c.active!==false
 }));
 let categoryData=JSON.parse(localStorage.getItem("v4_categories")||"null")||["Moda","Eletrônicos","Cozinha","Casa","Beleza","Calçados"];
-let currentCategory="Todos",favoritesOnly=false,adminMode=sessionStorage.getItem("v4_admin")==="1",appliedCoupon=null;
+let currentCategory="Todos",favoritesOnly=false,adminMode=false,appliedCoupon=null;
 let editorImages=[],detailProduct=null,selectedColor="",selectedSize="",selectedMeasure="",detailQty=1;
 let policies=JSON.parse(localStorage.getItem("v7_policies")||"null")||{exchangeTitle:"Política de Troca e Devolução",exchangeText:"Troca ou devolução em até 7 dias corridos após o recebimento, conforme as regras aplicáveis.",privacyText:"Seus dados são usados para processar pedidos e atendimento.",termsText:"Ao comprar, você aceita os termos da loja."}; let users=JSON.parse(localStorage.getItem("v7_users")||"[]"),orders=JSON.parse(localStorage.getItem("v7_orders")||"[]"),chatMessages=JSON.parse(localStorage.getItem("v7_chat")||"[]"),currentUser=JSON.parse(localStorage.getItem("v7_current_user")||"null");
 
@@ -347,7 +352,7 @@ async function dbDelete(id){
 }
 async function saveCloudState(){
   const state={
-    store,design,coupons,categoryData,policies,orders,chatMessages,
+    store,design,coupons,categoryData,policies,
     updatedAt:firebase.firestore.FieldValue.serverTimestamp()
   };
   await cloudDB.collection("app").doc("state").set(JSON.parse(JSON.stringify(state)),{merge:true});
@@ -361,8 +366,6 @@ async function loadCloudState(){
   coupons=d.coupons||coupons;
   categoryData=d.categoryData||categoryData;
   policies=d.policies||policies;
-  orders=d.orders||orders;
-  chatMessages=d.chatMessages||chatMessages;
   return true;
 }
 async function seedCloud(){
@@ -387,6 +390,17 @@ async function seedCloud(){
   }
   await saveCloudState();
 }
+
+async function createCloudOrder(order){
+  const safeOrder=JSON.parse(JSON.stringify(order));
+  await cloudDB.collection("orders").doc(String(order.id)).set(safeOrder);
+}
+async function loadAdminOrders(){
+  if(!adminMode)return;
+  const snapshot=await cloudDB.collection("orders").orderBy("id","desc").get();
+  orders=snapshot.docs.map(doc=>doc.data());
+}
+
 function startCloudRealtime(){
   cloudDB.collection("products").onSnapshot(snapshot=>{
     products=snapshot.docs.map(doc=>doc.data()).sort((a,b)=>Number(a.id)-Number(b.id));
@@ -400,8 +414,6 @@ function startCloudRealtime(){
     coupons=d.coupons||coupons;
     categoryData=d.categoryData||categoryData;
     policies=d.policies||policies;
-    orders=d.orders||orders;
-    chatMessages=d.chatMessages||chatMessages;
     applyDesign();renderStore();renderCategories();renderProducts();updateCounts();
   },err=>console.error("Configurações em tempo real:",err));
 }
@@ -426,10 +438,12 @@ function persistSmall(){
   localStorage.setItem("v4_favorites",JSON.stringify(favorites));
   localStorage.setItem("v4_coupons",JSON.stringify(coupons));
   localStorage.setItem("v4_categories",JSON.stringify(categoryData));
-  saveCloudState().catch(err=>{
-    console.error("Erro ao sincronizar:",err);
-    alert("Não foi possível sincronizar com o banco online. Verifique a internet ou as regras do Firestore.");
-  });
+  if(adminMode){
+    saveCloudState().catch(err=>{
+      console.error("Erro ao sincronizar:",err);
+      alert("Não foi possível salvar online. Confirme seu login administrativo.");
+    });
+  }
 }
 function money(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
 function num(v){return Number(String(v||"").replace(/\./g,"").replace(",","."))||0}
@@ -544,10 +558,45 @@ function applyCoupon(){
 }
 function checkoutWhatsapp(){if(!cart.length)return alert("Carrinho vazio.");if(!store.whatsapp)return alert("Configure o WhatsApp no painel ADM.");const t=totals();let lines=[`Olá! Quero fazer um pedido na ${store.brand}:`];cart.forEach(c=>{const p=products.find(x=>x.id===c.id);if(p)lines.push(`• ${c.qty}x ${p.name}${c.color?` | Cor: ${c.color}`:""}${c.size?` | Tam.: ${c.size}`:""} — ${money(p.price*c.qty)}`)});lines.push(`Subtotal: ${money(t.subtotal)}`);if(t.discount)lines.push(`Desconto: ${money(t.discount)}`);lines.push(`Frete: ${t.shipping===0?"Grátis":money(t.shipping)}`,`Total: ${money(t.total)}`);if(store.pix)lines.push(`Pix informado pela loja: ${store.pix}`);lines.push("Pode confirmar disponibilidade e prazo?");if(appliedCoupon){const saved=coupons.find(c=>c.code===appliedCoupon.code);if(saved)saved.used=Number(saved.used||0)+1;persistSmall()}window.open(`https://wa.me/55${store.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`,"_blank")}
 
-function openAdminLogin(){if(adminMode){showAdmin();return}$("adminLogin").style.display="flex";setTimeout(()=>$("adminPassword").focus(),100)}
-function checkAdmin(){if($("adminPassword").value===ADMIN_PASSWORD){adminMode=true;sessionStorage.setItem("v4_admin","1");closeOverlay("adminLogin");$("adminPassword").value="";showAdmin();renderProducts()}else alert("Senha incorreta.")}
-function showAdmin(){$("adminPanel").style.display="block";window.scrollTo({top:0,behavior:"smooth"});updateStats()}
-function logoutAdmin(){adminMode=false;sessionStorage.removeItem("v4_admin");$("adminPanel").style.display="none";renderProducts();alert("Painel ADM bloqueado.")}
+function openAdminLogin(){
+  if(adminMode){showAdmin();return}
+  $("adminLogin").style.display="flex";
+  setTimeout(()=>$("adminPassword").focus(),100);
+}
+async function checkAdmin(){
+  const email=$("adminEmail").value.trim().toLowerCase();
+  const password=$("adminPassword").value;
+  if(email!==ADMIN_EMAIL)return alert("Este e-mail não tem permissão de administrador.");
+  if(!password)return alert("Digite a senha.");
+  try{
+    setUploadStatus("adminLoginStatus","Verificando acesso...");
+    await firebaseAuth.signInWithEmailAndPassword(email,password);
+    $("adminPassword").value="";
+    closeOverlay("adminLogin");
+  }catch(err){
+    console.error(err);
+    const messages={
+      "auth/invalid-credential":"E-mail ou senha incorretos.",
+      "auth/user-not-found":"Usuário administrador ainda não foi criado no Firebase.",
+      "auth/wrong-password":"Senha incorreta.",
+      "auth/too-many-requests":"Muitas tentativas. Aguarde alguns minutos."
+    };
+    setUploadStatus("adminLoginStatus",messages[err.code]||("Erro no login: "+err.message),true);
+  }
+}
+function showAdmin(){
+  $("adminPanel").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+  updateStats();
+  loadAdminOrders().catch(console.error);
+}
+async function logoutAdmin(){
+  await firebaseAuth.signOut();
+  adminMode=false;
+  $("adminPanel").style.display="none";
+  renderProducts();
+  alert("Painel ADM bloqueado.");
+}
 
 
 
@@ -784,13 +833,55 @@ function importBackup(e){const f=e.target.files[0];if(!f)return;const r=new File
 document.querySelectorAll(".overlay").forEach(el=>el.addEventListener("click",e=>{if(e.target===el)el.style.display="none"}));
 $("adminPassword").addEventListener("keydown",e=>{if(e.key==="Enter")checkAdmin()});
 
+firebaseAuth.onAuthStateChanged(user=>{
+  adminMode=!!(user&&user.email&&user.email.toLowerCase()===ADMIN_EMAIL);
+  if(adminMode){
+    $("adminPanel").style.display="block";
+  }else{
+    $("adminPanel").style.display="none";
+  }
+  renderProducts();
+});
+
+
 function openAccount(ret=false){const s=$("accountSheet");if(currentUser){s.innerHTML=`<h3>Minha conta</h3><p><b>${currentUser.name}</b><br>${currentUser.email}</p><button class="btn primary" style="width:100%" onclick="openMyOrders()">Meus pedidos</button><button class="btn secondary" style="width:100%;margin-top:8px" onclick="currentUser=null;localStorage.removeItem('v7_current_user');closeOverlay('accountOverlay')">Sair</button>`}else{s.innerHTML=`<h3>Entrar ou cadastrar</h3><div class="field"><label>Nome</label><input id="uName"></div><div class="field"><label>E-mail</label><input id="uEmail"></div><div class="field"><label>Senha</label><input id="uPass" type="password"></div><div class="actions"><button class="btn secondary" onclick="loginUser(${ret})">Entrar</button><button class="btn primary" onclick="registerUser(${ret})">Cadastrar</button></div>`}$("accountOverlay").style.display="flex"}
 function registerUser(ret){const u={name:$("uName").value.trim(),email:$("uEmail").value.trim().toLowerCase(),password:$("uPass").value};if(!u.name||!u.email||u.password.length<4)return alert("Preencha os dados.");if(users.some(x=>x.email===u.email))return alert("E-mail já cadastrado.");users.push(u);currentUser=u;localStorage.setItem("v7_current_user",JSON.stringify(u));persistSmall();closeOverlay("accountOverlay");ret&&openCheckout()}
 function loginUser(ret){const u=users.find(x=>x.email===$("uEmail").value.trim().toLowerCase()&&x.password===$("uPass").value);if(!u)return alert("E-mail ou senha incorretos.");currentUser=u;localStorage.setItem("v7_current_user",JSON.stringify(u));closeOverlay("accountOverlay");ret&&openCheckout()}
 function openCheckout(){if(!cart.length)return alert("Carrinho vazio.");if(!currentUser)return openAccount(true);const t=totals();$("checkoutSheet").innerHTML=`<h3>Finalizar compra</h3><div class="field"><label>Nome completo</label><input id="coName" value="${currentUser.name||''}"></div><div class="two"><div class="field"><label>CPF</label><input id="coCpf"></div><div class="field"><label>CEP</label><input id="coCep"></div></div><div class="field"><label>Endereço</label><input id="coAddress"></div><div class="two"><div class="field"><label>Número</label><input id="coNumber"></div><div class="field"><label>Complemento</label><input id="coComp"></div></div><div class="field"><label>Pagamento</label><select id="coPayment"><option>Pix</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Boleto</option></select></div><div class="summary"><div class="sumrow total"><span>Total</span><span>${money(t.total)}</span></div></div><label style="font-size:11px"><input type="checkbox" id="agree"> Aceito termos e políticas.</label><button class="btn primary" style="width:100%;margin-top:10px" onclick="finishOrder()">Confirmar pedido</button>`;$("checkoutOverlay").style.display="flex"}
-function finishOrder(){if(!$("agree").checked)return alert("Aceite os termos.");const cpf=$("coCpf").value.replace(/\D/g,''),cep=$("coCep").value.replace(/\D/g,'');if(cpf.length!==11)return alert("CPF precisa ter 11 números.");if(cep.length!==8)return alert("CEP precisa ter 8 números.");orders.unshift({id:Date.now(),user:currentUser.email,items:[...cart],total:totals().total,payment:$("coPayment").value,status:"Aguardando confirmação",date:new Date().toLocaleString("pt-BR")});cart=[];persistSmall();updateCounts();closeOverlay("checkoutOverlay");alert("Pedido criado. Envie a confirmação pelo WhatsApp.");openMyOrders()}
+async function finishOrder(){
+  if(!$("agree").checked)return alert("Aceite os termos.");
+  const cpf=$("coCpf").value.replace(/\D/g,''),cep=$("coCep").value.replace(/\D/g,'');
+  if(cpf.length!==11)return alert("CPF precisa ter 11 números.");
+  if(cep.length!==8)return alert("CEP precisa ter 8 números.");
+  const order={
+    id:Date.now(),user:currentUser.email,items:[...cart],total:totals().total,
+    payment:$("coPayment").value,status:"Aguardando confirmação",
+    date:new Date().toLocaleString("pt-BR")
+  };
+  try{
+    await createCloudOrder(order);
+    orders.unshift(order);
+    cart=[];
+    persistSmall();
+    updateCounts();
+    closeOverlay("checkoutOverlay");
+    alert("Pedido criado. Envie a confirmação pelo WhatsApp.");
+    openMyOrders();
+  }catch(err){
+    console.error(err);
+    alert("Não foi possível registrar o pedido. Tente novamente.");
+  }
+}
 function openMyOrders(){$("ordersSheet").innerHTML=`<h3>Meus pedidos</h3>${orders.filter(o=>currentUser&&o.user===currentUser.email).map(o=>`<div class="listitem"><b>#${o.id}</b><br>${money(o.total)} • ${o.status}<br><small>${o.date}</small></div>`).join('')||'<p>Nenhum pedido.</p>'}`;$("ordersOverlay").style.display="flex"}
-function openOrders(){if(!adminMode)return;$("ordersSheet").innerHTML=`<h3>Pedidos</h3>${orders.map(o=>`<div class="listitem"><b>#${o.id}</b><br>${o.user}<br>${money(o.total)} • ${o.payment}<br><select id="st${o.id}"><option>${o.status}</option><option>Aguardando confirmação</option><option>Pagamento aprovado</option><option>Em preparação</option><option>Enviado</option><option>Entregue</option><option>Cancelado</option></select><button class="btn primary" onclick="orders.find(x=>x.id===${o.id}).status=$('st${o.id}').value;persistSmall();openOrders()">Atualizar</button></div>`).join('')||'<p>Nenhum pedido.</p>'}`;$("ordersOverlay").style.display="flex"}
+
+async function updateOrderStatus(id,status){
+  if(!adminMode)return;
+  await cloudDB.collection("orders").doc(String(id)).update({status});
+  const order=orders.find(x=>x.id===id);if(order)order.status=status;
+  openOrders();
+}
+
+async function openOrders(){await loadAdminOrders();if(!adminMode)return;$("ordersSheet").innerHTML=`<h3>Pedidos</h3>${orders.map(o=>`<div class="listitem"><b>#${o.id}</b><br>${o.user}<br>${money(o.total)} • ${o.payment}<br><select id="st${o.id}"><option>${o.status}</option><option>Aguardando confirmação</option><option>Pagamento aprovado</option><option>Em preparação</option><option>Enviado</option><option>Entregue</option><option>Cancelado</option></select><button class="btn primary" onclick="updateOrderStatus(${o.id},$('st${o.id}').value)">Atualizar</button></div>`).join('')||'<p>Nenhum pedido.</p>'}`;$("ordersOverlay").style.display="flex"}
 function openPolicies(){const edit=adminMode;$("policySheet").innerHTML=edit?`<h3>Políticas</h3><div class="field"><label>Título</label><input id="polTitle" value="${policies.exchangeTitle}"></div><div class="field"><label>Troca e devolução</label><textarea id="polExchange" rows="6">${policies.exchangeText}</textarea></div><div class="field"><label>Privacidade</label><textarea id="polPrivacy" rows="4">${policies.privacyText}</textarea></div><div class="field"><label>Termos</label><textarea id="polTerms" rows="4">${policies.termsText}</textarea></div><button class="btn primary" style="width:100%" onclick="policies={exchangeTitle:$('polTitle').value,exchangeText:$('polExchange').value,privacyText:$('polPrivacy').value,termsText:$('polTerms').value};persistSmall();closeOverlay('policyOverlay')">Salvar</button>`:`<h3>${policies.exchangeTitle}</h3><p class="policy">${policies.exchangeText}</p><h3>Privacidade</h3><p class="policy">${policies.privacyText}</p><h3>Termos</h3><p class="policy">${policies.termsText}</p>`;$("policyOverlay").style.display="flex"}
 function openChat(){const mine=chatMessages.filter(m=>!currentUser||m.user===currentUser.email);$("chatSheet").innerHTML=`<h3>Atendimento</h3><div class="chatlog">${mine.map(m=>`<div class="msg ${m.from==='client'?'mine':'theirs'}">${m.text}</div>`).join('')}</div><div class="two" style="margin-top:8px"><input id="chatInput" placeholder="Digite sua mensagem"><button class="btn primary" onclick="sendChat()">Enviar</button></div><button class="btn secondary" style="width:100%;margin-top:8px" onclick="window.open('https://wa.me/${store.whatsapp}','_blank')">WhatsApp</button>`;$("chatOverlay").style.display="flex"}
 function sendChat(){if(!currentUser)return openAccount();const text=$("chatInput").value.trim();if(!text)return;chatMessages.push({id:Date.now(),user:currentUser.email,from:'client',text});persistSmall();openChat()}

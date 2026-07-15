@@ -1,0 +1,32 @@
+ZAPPYLIP — LOGIN ADMINISTRATIVO SEGURO
+
+E-mail autorizado:
+briangabrielfsoares@gmail.com
+
+ANTES DE PUBLICAR O ZIP:
+
+1. Firebase > Authentication.
+2. Clique em Começar.
+3. Em Provedores, ative E-mail/senha.
+4. Abra a aba Usuários.
+5. Clique em Adicionar usuário.
+6. Use o e-mail: briangabrielfsoares@gmail.com
+7. Crie uma senha forte que só você saiba.
+
+REGRAS DO FIRESTORE:
+
+1. Firebase > Firestore Database > Regras.
+2. Apague as regras antigas.
+3. Copie todo o conteúdo do arquivo firestore.rules.
+4. Clique em Publicar.
+
+ATUALIZAÇÃO DO SITE:
+
+1. Extraia este ZIP.
+2. No GitHub, envie os arquivos novos substituindo os antigos.
+3. Clique em Commit changes.
+4. A Cloudflare atualizará o mesmo link automaticamente.
+
+Depois, clique na engrenagem do site e entre com o e-mail administrativo e a senha criada no Firebase.
+
+Nunca envie sua senha para ninguém.
