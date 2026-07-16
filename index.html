@@ -6,23 +6,23 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="theme-color" content="#ff5a1f" id="themeMeta">
-<title>Zappylip</title>
+<meta name="theme-color" content="#e50914" id="themeMeta">
+<title>RedDrop</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<meta name="application-name" content="Zappylip">
-<meta name="apple-mobile-web-app-title" content="Zappylip">
+<meta name="application-name" content="RedDrop">
+<meta name="apple-mobile-web-app-title" content="RedDrop">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="description" content="Zappylip — produtos baratos de verdade.">
+<meta name="description" content="RedDrop — seu estilo favorito sem frete absurdo.">
 <style>
 :root{
-  --brand:#ff5a1f;--brand2:#ff7b4d;--bg:#f4f5f7;--card:#ffffff;--text:#1f2328;
+  --brand:#e50914;--brand2:#8b0000;--bg:#f4f4f5;--card:#ffffff;--text:#161618;
   --muted:#6b7280;--line:#e5e7eb;--danger:#dc2626;--green:#16a34a;--dark:#111827;
-  --hero1:#111827;--hero2:#374151;--shadow:0 6px 24px rgba(0,0,0,.08);
+  --hero1:#09090b;--hero2:#3f0a0d;--shadow:0 6px 24px rgba(0,0,0,.08);
 }
 *{box-sizing:border-box}
 html,body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
@@ -69,8 +69,8 @@ header{position:sticky;top:0;z-index:40;padding:12px;color:#fff;background:linea
 .summary{background:color-mix(in srgb,var(--card),#f8fafc 65%);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px}.sumrow{display:flex;justify-content:space-between;margin:6px 0;font-size:13px}.sumrow.total{font-size:18px;font-weight:900}
 .couponline{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}.couponline input{padding:11px;border:1px solid var(--line);border-radius:8px}.empty{text-align:center;color:var(--muted);padding:35px 10px}.listitem{border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0}.listitem h4{margin:0 0 6px}.listitem small{color:var(--muted)}
 .gallery-main{aspect-ratio:1/1;background:#eee;border-radius:12px;overflow:hidden}.gallery-main img{width:100%;height:100%;object-fit:cover}.gallery-thumbs{display:flex;gap:7px;overflow:auto;margin-top:8px}.gallery-thumbs img{width:62px;height:62px;object-fit:cover;border-radius:8px;border:2px solid transparent}.gallery-thumbs img.active{border-color:var(--brand)}
-.detail-title{font-size:20px;margin:14px 0 4px}.detail-price{font-size:25px;color:var(--brand);font-weight:900}.detail-desc{font-size:13px;color:var(--muted);line-height:1.5}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:9px;padding:9px 12px;font-size:12px}.chip.active{background:var(--brand);border-color:var(--brand);color:#fff}
-.storage-info{padding:9px;border-radius:9px;background:#fff7ed;color:#9a3412;font-size:11px;line-height:1.4;margin:8px 0}.upload-status{font-size:11px;padding:8px;border-radius:8px;background:#eff6ff;color:#1d4ed8;margin-top:7px}.cloud-btn{width:100%;border:0;border-radius:9px;padding:11px;background:#2563eb;color:#fff;font-weight:900;margin-top:8px}
+.detail-title{font-size:20px;margin:14px 0 4px}.detail-price{font-size:25px;color:var(--brand);font-weight:900}.detail-desc{font-size:13px;color:var(--muted);line-height:1.5}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:9px;padding:9px 12px;font-size:12px}.chip.active{background:var(--brand);border-color:var(--brand);color:#fff}.chip:focus-visible{outline:3px solid color-mix(in srgb,var(--brand),white 65%)}.variant-required{font-size:11px;color:var(--danger);margin-top:6px}.measurement-box{border:1px solid var(--line);background:color-mix(in srgb,var(--card),#f8fafc 70%);border-radius:10px;padding:12px;font-size:12px;line-height:1.55;white-space:pre-line}.draft-badge{position:absolute;right:7px;bottom:7px;background:#111827;color:#fff;border-radius:6px;padding:5px 7px;font-size:10px;font-weight:900}
+.storage-info{padding:9px;border-radius:9px;background:#fef2f2;color:#991b1b;font-size:11px;line-height:1.4;margin:8px 0}.upload-status{font-size:11px;padding:8px;border-radius:8px;background:#eff6ff;color:#1d4ed8;margin-top:7px}.cloud-btn{width:100%;border:0;border-radius:9px;padding:11px;background:#b91c1c;color:#fff;font-weight:900;margin-top:8px}
 @media(min-width:720px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));max-width:1100px;margin:auto}.hero,.categories,.section-title,.quick,.admin{max-width:1100px;margin-left:auto;margin-right:auto}.sheet{max-width:680px;margin:auto;border-radius:18px}.overlay{align-items:center}}
 
 .video-preview{width:100%;aspect-ratio:1;object-fit:cover}.promo-box{background:#fff1eb;border:1px solid #ffd4c3;border-radius:10px;padding:10px;color:#b93800;font-weight:800;font-size:12px;margin:8px 0}.review{border-top:1px solid var(--line);padding:10px 0}.review p{font-size:12px;color:var(--muted)}.suggestions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.suggestion{border:1px solid var(--line);border-radius:10px;overflow:hidden}.suggestion img{width:100%;aspect-ratio:1;object-fit:cover}.suggestion div{padding:7px;font-size:11px}.chatlog{height:260px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px;background:#f8fafc}.msg{max-width:82%;padding:8px;border-radius:11px;margin:5px 0;font-size:12px}.mine{margin-left:auto;background:var(--brand);color:#fff}.theirs{background:#fff}.policy{font-size:12px;line-height:1.5;color:var(--muted)}
@@ -79,6 +79,7 @@ header{position:sticky;top:0;z-index:40;padding:12px;color:#fff;background:linea
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
 <script>
 const firebaseConfig={
   apiKey:"AIzaSyCHoY3PkyCskmabmOia9oxrxKZSIbylGOo",
@@ -92,24 +93,17 @@ const firebaseConfig={
 firebase.initializeApp(firebaseConfig);
 const cloudDB=firebase.firestore();
 const firebaseAuth=firebase.auth();
+const firebaseStorage=firebase.storage();
 const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-const SUPABASE_URL="https://hkoqdlinuhnywznqfdgz.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_vosTdg2ZwXWOSC_9SB4pVw_q3SFuQT7";
-const SUPABASE_BUCKET="media";
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-</script>
 
 </head>
 <body>
 <div id="cloudStatus" style="position:fixed;right:10px;bottom:76px;z-index:9999;padding:7px 10px;border-radius:999px;background:#166534;color:white;font-size:11px;font-weight:800;box-shadow:0 4px 16px #0003">● Firebase protegido</div>
 <header>
   <div class="toprow">
-    <div class="brandbox"><img class="logo" id="brandLogo" src="icon-192.png" alt="Logo" onerror="this.onerror=null;this.src='icon-192.png'"><div><div class="brand" id="brandName">zappylip</div><div class="tag" id="brandTag">Produtos baratos de verdade</div></div></div>
+    <div class="brandbox"><img class="logo" id="brandLogo" src="icon-192.png" alt="Logo" onerror="this.onerror=null;this.src='icon-192.png'"><div><div class="brand" id="brandName">RED DROP</div><div class="tag" id="brandTag">Seu estilo sem frete absurdo</div></div></div>
     <button class="iconbtn" onclick="openChat()">💬</button><button class="iconbtn" onclick="openAdminLogin()">⚙</button>
   </div>
   <div class="search"><span>🔎</span><input id="searchInput" placeholder="Buscar produtos..." oninput="renderProducts()"></div>
@@ -117,8 +111,8 @@ const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY
 
 <section class="hero" id="hero">
   <small>OFERTAS SELECIONADAS</small>
-  <h2 id="heroTitle">Achadinhos por preços baixos</h2>
-  <p id="heroText">Produtos variados e pedidos diretos pelo WhatsApp.</p>
+  <h2 id="heroTitle">Seu estilo favorito sem frete absurdo</h2>
+  <p id="heroText">Ofertas selecionadas, compra segura e envio para todo o Brasil.</p>
 </section>
 
 <section class="quick">
@@ -144,7 +138,7 @@ const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY
     <button class="btn danger" onclick="logoutAdmin()">Sair do ADM</button>
   </div>
   <input type="file" id="importFile" accept=".json" hidden onchange="importBackup(event)">
-  <p class="notice">Fotos e vídeos enviados pelo painel vão para o Supabase Storage e recebem links públicos. Os dados do produto ainda ficam salvos neste navegador.</p>
+  <p class="notice">Produtos e configurações ficam no Firebase. Novas fotos e vídeos são enviados ao Firebase Storage usando o login administrativo.</p>
 </section>
 
 <div class="categories" id="categories"></div>
@@ -170,13 +164,14 @@ const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY
 <div class="overlay" id="editorOverlay"><div class="sheet">
   <h3 id="editorTitle">Adicionar produto</h3>
   <input type="hidden" id="productId">
-  <div class="storage-info">As fotos e vídeos enviados aqui serão armazenados no Supabase Storage e receberão links públicos.</div>
+  <div class="storage-info">As fotos e vídeos enviados aqui serão armazenados no Firebase Storage. Você também pode importar um anúncio da Shopee como rascunho e revisar antes de publicar.</div>
+  <div class="field"><label>Importar produto por link da Shopee</label><div class="couponline"><input id="shopeeImportUrl" placeholder="https://br.shp.ee/..."><button type="button" class="btn primary" onclick="importShopeeProduct()">Importar</button></div><div id="shopeeImportStatus" class="upload-status hidden"></div></div>
   <div class="field"><label>Fotos do produto — até 8</label><input type="file" id="productImages" accept="image/*" multiple onchange="uploadProductImages()"></div>
   <button type="button" class="cloud-btn" onclick="uploadProductImages()">☁ Reenviar fotos selecionadas</button>
   <div id="productUploadStatus" class="upload-status hidden"></div>
   <div class="field">
       <label>Links públicos das imagens — um por linha</label>
-      <textarea id="imageUrls" rows="4" placeholder="Os links aparecerão aqui automaticamente"></textarea>
+      <textarea id="imageUrls" rows="4" placeholder="Os links aparecerão aqui automaticamente" oninput="syncEditorImagesFromLinks()"></textarea>
       <button type="button" class="btn danger" style="width:100%;margin-top:7px" onclick="clearImageLinks()">Apagar todos os links das imagens</button>
     </div>
   <div class="field"><label>Vídeos do produto</label><input type="file" id="productVideos" accept="video/*" multiple onchange="uploadProductVideos()"></div>
@@ -195,7 +190,8 @@ const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY
   <div class="two"><div class="field"><label>Avaliação</label><input id="productRating" placeholder="4.8"></div><div class="field"><label>Selo</label><input id="productBadge" placeholder="OFERTA"></div></div>
   <div class="field"><label>Cores disponíveis — separadas por vírgula</label><input id="productColors" placeholder="Preto, Branco, Azul"></div>
   <div class="field"><label>Tamanhos — separados por vírgula</label><input id="productSizes" placeholder="P, M, G, GG ou 38, 39, 40"></div>
-<div class="field"><label>Medidas específicas — separadas por vírgula</label><input id="productMeasures" placeholder="1 metro, 50 centímetros, 2 litros"></div>
+<div class="field"><label>Medidas — uma linha por tamanho</label><textarea id="productMeasures" rows="5" placeholder="P: largura 54,73 cm; comprimento 63,29 cm; manga 61,50 cm&#10;M: largura 56,76 cm; comprimento 66,29 cm; manga 63,50 cm"></textarea><div class="notice">Use uma linha por tamanho. Dentro da linha, separe largura, comprimento e manga com ponto e vírgula.</div></div>
+<div class="two"><div class="field"><label>Status</label><select id="productActive"><option value="true">Publicado</option><option value="false">Rascunho</option></select></div><div class="field"><label>Link de origem</label><input id="productSourceUrl" placeholder="Link da Shopee ou fornecedor"></div></div>
 <div class="two"><div class="field"><label>Promoção ativa</label><select id="productPromo"><option value="true">Sim</option><option value="false">Não</option></select></div><div class="field"><label>Fim da promoção</label><input id="productPromoEnd" type="datetime-local"></div></div>
   <div class="field"><label>Descrição</label><textarea id="productDescription" rows="4"></textarea></div>
   <div class="actions"><button class="btn secondary" onclick="closeEditor()">Cancelar</button><button class="btn primary" onclick="saveProduct()">Salvar</button></div>
@@ -211,6 +207,7 @@ const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY
   <div class="field"><label>WhatsApp com DDD</label><input id="setWhatsapp"></div>
   <div class="field"><label>Chave Pix</label><input id="setPix"></div>
   <div class="two"><div class="field"><label>Frete padrão</label><input id="setShipping" placeholder="12,00"></div><div class="field"><label>Frete grátis acima</label><input id="setFreeShipping" placeholder="150,00"></div></div>
+  <div class="two"><div class="field"><label>Margem sugerida na importação (%)</label><input id="setResaleMargin" inputmode="decimal" placeholder="50"></div><div class="field"><label>URL do importador Shopee</label><input id="setImporterUrl" placeholder="https://seu-worker.workers.dev"></div></div>
   <div class="actions"><button class="btn secondary" onclick="closeOverlay('settingsOverlay')">Cancelar</button><button class="btn primary" onclick="saveSettings()">Salvar</button></div>
 </div></div>
 
@@ -285,8 +282,9 @@ const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY
   <h3 class="detail-title" id="detailName"></h3>
   <div class="detail-price" id="detailPrice"></div>
   <p class="detail-desc" id="detailDescription"></p>
-  <div id="detailColorWrap"><div class="field"><label>Escolha a cor</label><div class="chips" id="detailColors"></div></div></div>
-  <div id="detailSizeWrap"><div class="field"><label>Escolha o tamanho</label><div class="chips" id="detailSizes"></div></div></div>
+  <div id="detailColorWrap"><div class="field"><label>Escolha a cor</label><div class="chips" id="detailColors"></div><div class="variant-required" id="detailColorRequired"></div></div></div>
+  <div id="detailSizeWrap"><div class="field"><label>Escolha o tamanho</label><div class="chips" id="detailSizes"></div><div class="variant-required" id="detailSizeRequired"></div></div></div>
+  <div class="field" id="detailMeasurementWrap" style="display:none"><label>Medidas do tamanho selecionado</label><div class="measurement-box" id="detailMeasurement"></div></div>
   <div class="field"><label>Quantidade</label><div class="qty"><button onclick="detailQty=Math.max(1,detailQty-1);renderDetailVariants()">−</button><b id="detailQty">1</b><button onclick="detailQty=Math.min(detailProduct.stock||99,detailQty+1);renderDetailVariants()">+</button></div></div>
 <div class="actions"><button class="btn secondary" onclick="addDetailToCart(false)">Adicionar ao carrinho</button><button class="btn primary" onclick="addDetailToCart(true)">Comprar agora</button></div>
 <div id="detailReviews"></div><h3>Produtos sugeridos</h3><div class="suggestions" id="detailSuggestions"></div><button class="btn secondary" style="width:100%;margin-top:10px" onclick="openPolicies()">Trocas e devoluções</button>
@@ -319,8 +317,8 @@ const defaults=[
 {id:6,name:"Tênis Casual Unissex",price:119.9,oldPrice:159.9,category:"Calçados",brand:"Urban",stock:12,sold:146,rating:4.7,badge:"NOVIDADE",description:"Versátil para o dia a dia.",images:[placeholder("👟","CALÇADOS","#374151","#9ca3af")],colors:["Preto","Branco"],sizes:["37","38","39","40","41","42"]}
 ];
 let db,products=[];
-let store=JSON.parse(localStorage.getItem("v4_store")||"null")||{brand:"zappylip",tag:"Produtos baratos de verdade",heroTitle:"Achadinhos por preços baixos",heroText:"Produtos variados e pedidos diretos pelo WhatsApp.",whatsapp:"",pix:"",shipping:12,freeShipping:150};
-let design=JSON.parse(localStorage.getItem("v4_design")||"null")||{brand:"#ff5a1f",brand2:"#ff7b4d",bg:"#f4f5f7",card:"#ffffff",text:"#1f2328",hero1:"#111827",hero2:"#374151",logo:"icon-192.png",heroImage:""};
+let store=JSON.parse(localStorage.getItem("v4_store")||"null")||{brand:"RED DROP",tag:"Seu estilo sem frete absurdo",heroTitle:"Seu estilo favorito sem frete absurdo",heroText:"Ofertas selecionadas, compra segura e envio para todo o Brasil.",whatsapp:"",pix:"",shipping:12,freeShipping:150,resaleMargin:50,importerUrl:""};
+let design=JSON.parse(localStorage.getItem("v4_design")||"null")||{brand:"#e50914",brand2:"#8b0000",bg:"#f4f4f5",card:"#ffffff",text:"#161618",hero1:"#09090b",hero2:"#3f0a0d",logo:"icon-192.png",heroImage:""};
 let cart=JSON.parse(localStorage.getItem("v4_cart")||"[]"),favorites=JSON.parse(localStorage.getItem("v4_favorites")||"[]");
 let coupons=JSON.parse(localStorage.getItem("v4_coupons")||"null")||[
   {code:"BARATO10",type:"percent",value:10,minimum:0,maxDiscount:0,category:"",expiry:"",usageLimit:0,used:0,description:"10% de desconto"}
@@ -340,20 +338,33 @@ coupons=coupons.map(c=>({
 }));
 let categoryData=JSON.parse(localStorage.getItem("v4_categories")||"null")||["Moda","Eletrônicos","Cozinha","Casa","Beleza","Calçados"];
 let currentCategory="Todos",favoritesOnly=false,adminMode=false,appliedCoupon=null;
-let editorImages=[],detailProduct=null,selectedColor="",selectedSize="",selectedMeasure="",detailQty=1;
-let policies=JSON.parse(localStorage.getItem("v7_policies")||"null")||{exchangeTitle:"Política de Troca e Devolução",exchangeText:"Troca ou devolução em até 7 dias corridos após o recebimento, conforme as regras aplicáveis.",privacyText:"Seus dados são usados para processar pedidos e atendimento.",termsText:"Ao comprar, você aceita os termos da loja."}; let users=JSON.parse(localStorage.getItem("v7_users")||"[]"),orders=JSON.parse(localStorage.getItem("v7_orders")||"[]"),chatMessages=JSON.parse(localStorage.getItem("v7_chat")||"[]"),currentUser=JSON.parse(localStorage.getItem("v7_current_user")||"null");
+let editorImages=[],detailProduct=null,selectedColor="",selectedSize="",detailQty=1;
+let policies=JSON.parse(localStorage.getItem("v7_policies")||"null")||{exchangeTitle:"Política de Troca e Devolução",exchangeText:"Troca ou devolução em até 7 dias corridos após o recebimento, conforme as regras aplicáveis.",privacyText:"Seus dados são usados para processar pedidos e atendimento.",termsText:"Ao comprar, você aceita os termos da loja."}; let orders=[],chatMessages=JSON.parse(localStorage.getItem("v7_chat")||"[]"),currentUser=null;
 
 
 function openDB(){return Promise.resolve(cloudDB)}
 async function dbGetAll(){
   const snapshot=await cloudDB.collection("products").get();
-  return snapshot.docs.map(doc=>doc.data()).sort((a,b)=>Number(a.id)-Number(b.id));
+  return snapshot.docs.map(doc=>normalizeProduct(doc.data())).sort((a,b)=>Number(a.id)-Number(b.id));
 }
 async function dbPut(p){
   await cloudDB.collection("products").doc(String(p.id)).set(JSON.parse(JSON.stringify(p)));
 }
 async function dbDelete(id){
   await cloudDB.collection("products").doc(String(id)).delete();
+}
+async function dbGetPrivate(id){
+  if(!adminMode||!id)return{};
+  const doc=await cloudDB.collection("product_private").doc(String(id)).get();
+  return doc.exists?(doc.data()||{}):{};
+}
+async function dbPutPrivate(id,data){
+  if(!adminMode)return;
+  await cloudDB.collection("product_private").doc(String(id)).set(JSON.parse(JSON.stringify(data||{})),{merge:true});
+}
+async function dbDeletePrivate(id){
+  if(!adminMode)return;
+  await cloudDB.collection("product_private").doc(String(id)).delete();
 }
 async function saveCloudState(){
   const state={
@@ -408,7 +419,7 @@ async function loadAdminOrders(){
 
 function startCloudRealtime(){
   cloudDB.collection("products").onSnapshot(snapshot=>{
-    products=snapshot.docs.map(doc=>doc.data()).sort((a,b)=>Number(a.id)-Number(b.id));
+    products=snapshot.docs.map(doc=>normalizeProduct(doc.data())).sort((a,b)=>Number(a.id)-Number(b.id));
     renderCategories();renderProducts();updateCounts();
   },err=>console.error("Produtos em tempo real:",err));
   cloudDB.collection("app").doc("state").onSnapshot(doc=>{
@@ -419,7 +430,7 @@ function startCloudRealtime(){
     coupons=d.coupons||coupons;
     categoryData=d.categoryData||categoryData;
     policies=d.policies||policies;
-    applyDesign();renderStore();renderCategories();renderProducts();updateCounts();
+    migrateLegacyBrand();applyDesign();renderStore();renderCategories();renderProducts();updateCounts();
   },err=>console.error("Configurações em tempo real:",err));
 }
 async function initProducts(){
@@ -452,41 +463,75 @@ function persistSmall(){
 }
 function money(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
 function num(v){return Number(String(v||"").replace(/\./g,"").replace(",","."))||0}
-function arr(v){return String(v||"").split(",").map(x=>x.trim()).filter(Boolean)}
+function arr(v){return [...new Set(String(v||"").split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean))]}
+function uniqueLines(v){return [...new Set(String(v||"").split("\n").map(x=>x.trim()).filter(Boolean))]}
+function htmlJs(v){return JSON.stringify(v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+function parseMeasurements(text,sizes=[]){
+  const result={};
+  String(text||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(line=>{
+    const match=line.match(/^([^:]{1,30})\s*:\s*(.+)$/);
+    if(match)result[match[1].trim()]=match[2].trim();
+    else result._geral=result._geral?result._geral+" | "+line:line;
+  });
+  return result;
+}
+function measurementsToText(value,sizes=[]){
+  if(!value)return"";
+  if(typeof value==="string")return value;
+  if(!Array.isArray(value))return Object.entries(value).map(([size,text])=>size==="_geral"?text:`${size}: ${text}`).join("\n");
+  const joined=value.join(", ");
+  if(!sizes.length)return joined;
+  const escaped=sizes.map(x=>String(x).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));
+  const marker=new RegExp(`(?:^|\\b)(${escaped.join("|")})\\s*:\\s*`,"gi");
+  const matches=[...joined.matchAll(marker)];
+  if(!matches.length)return joined;
+  return matches.map((m,i)=>{
+    const start=m.index+m[0].length;
+    const end=i+1<matches.length?matches[i+1].index:joined.length;
+    const body=joined.slice(start,end).replace(/^[,;|\s]+|[,;|\s]+$/g,"").replace(/(\d),\s+(?=\d)/g,"$1,");return `${m[1]}: ${body}`;
+  }).join("\n");
+}
+function measurementFor(p,size){
+  const value=p?.measurements;
+  if(!value)return"";
+  if(typeof value==="string")return value;
+  if(!Array.isArray(value))return value[size]||value._geral||"";
+  const parsed=parseMeasurements(measurementsToText(value,p.sizes||[]),p.sizes||[]);
+  return parsed[size]||parsed._geral||"";
+}
+function normalizeProduct(p){
+  p=p||{};p.images=[...new Set((p.images||[p.image].filter(Boolean)).filter(Boolean))].slice(0,8);p.videos=[...new Set((p.videos||[]).filter(Boolean))];p.colors=Array.isArray(p.colors)?p.colors:arr(p.colors);p.sizes=Array.isArray(p.sizes)?p.sizes:arr(p.sizes);p.active=p.active!==false;delete p.image;return p;
+}
 function firstImage(p){return (p.images&&p.images[0])||placeholder("📦","PRODUTO","#374151","#9ca3af")}
 function fileData(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
 function closeOverlay(id){$(id).style.display="none"}
 
 function applyDesign(){const r=document.documentElement.style;r.setProperty("--brand",design.brand);r.setProperty("--brand2",design.brand2);r.setProperty("--bg",design.bg);r.setProperty("--card",design.card);r.setProperty("--text",design.text);r.setProperty("--hero1",design.hero1);r.setProperty("--hero2",design.hero2);$("brandLogo").src=design.logo||"icon-192.png";$("hero").style.backgroundImage=design.heroImage?`linear-gradient(180deg,transparent 10%,rgba(0,0,0,.18)),url("${design.heroImage}")`:"";$("themeMeta").content=design.brand}
-function renderStore(){$("brandName").textContent=store.brand;$("brandTag").textContent=store.tag;$("heroTitle").textContent=store.heroTitle;$("heroText").textContent=store.heroText;document.title=store.brand||"Zappylip"}
-function renderCategories(){$("categories").innerHTML=["Todos",...categoryData].map(c=>`<button class="cat ${c===currentCategory&&!favoritesOnly?'active':''}" onclick="setCategory(${JSON.stringify(c)})">${c}</button>`).join("")}
+function renderStore(){$("brandName").textContent=store.brand;$("brandTag").textContent=store.tag;$("heroTitle").textContent=store.heroTitle;$("heroText").textContent=store.heroText;document.title=store.brand||"RedDrop"}
+function migrateLegacyBrand(){const legacy=String(store.brand||"").toLowerCase();if(legacy==="zappylip"||legacy==="zappylip v7"){store={...store,brand:"RED DROP",tag:"Seu estilo sem frete absurdo",heroTitle:"Seu estilo favorito sem frete absurdo",heroText:"Ofertas selecionadas, compra segura e envio para todo o Brasil.",resaleMargin:store.resaleMargin??50,importerUrl:store.importerUrl||""}}if(design.brand==="#ff5a1f"){design={...design,brand:"#e50914",brand2:"#8b0000",hero1:"#09090b",hero2:"#3f0a0d",logo:"icon-192.png"}}}
+function renderCategories(){$("categories").innerHTML=["Todos",...categoryData].map(c=>`<button class="cat ${c===currentCategory&&!favoritesOnly?'active':''}" onclick="setCategory(${htmlJs(c)})">${c}</button>`).join("")}
 function setCategory(c){currentCategory=c;favoritesOnly=false;$("sectionTitle").textContent=c==="Todos"?"Produtos para você":c;renderCategories();renderProducts()}
 function showAll(){favoritesOnly=false;currentCategory="Todos";$("sectionTitle").textContent="Produtos para você";renderCategories();renderProducts();window.scrollTo({top:0,behavior:"smooth"})}
 function showFavorites(){favoritesOnly=true;$("sectionTitle").textContent="Seus favoritos";renderCategories();renderProducts()}
-function renderProducts(){const q=$("searchInput").value.toLowerCase().trim();let list=products.filter(p=>(favoritesOnly?favorites.includes(p.id):(currentCategory==="Todos"||p.category===currentCategory))&&(`${p.name} ${p.category} ${p.brand} ${p.description}`.toLowerCase().includes(q)));$("productCount").textContent=`${list.length} itens`;$("grid").innerHTML=list.map(p=>`<article class="card"><div class="imgwrap clickable" onclick="openDetail(${p.id})"><img src="${firstImage(p)}" alt="${p.name}">${p.badge?`<span class="badge">${p.badge}</span>`:""}${(p.images||[]).length>1?`<span class="photo-count">📷 ${(p.images||[]).length}</span>`:""}<button class="fav" onclick="event.stopPropagation();toggleFavorite(${p.id})">${favorites.includes(p.id)?"♥":"♡"}</button></div><div class="cardbody"><div class="product-name" onclick="openDetail(${p.id})">${p.name}</div><span class="price">${money(p.price)}</span>${p.oldPrice?`<span class="old">${money(p.oldPrice)}</span>`:""}<div class="meta"><span>⭐ ${p.rating||4.8}</span><span>${p.sold||0} vendidos</span></div><div class="meta"><span>${p.brand||""}</span><span class="${p.stock<=5?'low':''}">${p.stock>0?p.stock+" em estoque":"Esgotado"}</span></div><div class="variant-note">${(p.colors||[]).length?`${p.colors.length} cores`:""} ${(p.sizes||[]).length?`• ${p.sizes.length} tamanhos`:""}</div><button class="buy" ${p.stock<=0?'disabled style="opacity:.5"':''} onclick="openDetail(${p.id})">${p.stock>0?"Ver opções":"Esgotado"}</button><button class="editbtn" style="display:${adminMode?'block':'none'}" onclick="openEditor(${p.id})">Editar produto</button></div></article>`).join("")||`<div class="empty" style="grid-column:1/-1">Nenhum produto encontrado.</div>`;updateStats()}
+function renderProducts(){const q=$("searchInput").value.toLowerCase().trim();let list=products.filter(p=>(adminMode||p.active!==false)&&(favoritesOnly?favorites.includes(p.id):(currentCategory==="Todos"||p.category===currentCategory))&&(`${p.name} ${p.category} ${p.brand} ${p.description}`.toLowerCase().includes(q)));$("productCount").textContent=`${list.length} itens`;$("grid").innerHTML=list.map(p=>`<article class="card"><div class="imgwrap clickable" onclick="${p.active===false&&adminMode?`openEditor(${p.id})`:`openDetail(${p.id})`}"><img src="${firstImage(p)}" alt="${p.name}">${p.badge?`<span class="badge">${p.badge}</span>`:""}${p.active===false?`<span class="draft-badge">RASCUNHO</span>`:""}${(p.images||[]).length>1?`<span class="photo-count">📷 ${(p.images||[]).length}</span>`:""}<button class="fav" onclick="event.stopPropagation();toggleFavorite(${p.id})">${favorites.includes(p.id)?"♥":"♡"}</button></div><div class="cardbody"><div class="product-name" onclick="${p.active===false&&adminMode?`openEditor(${p.id})`:`openDetail(${p.id})`}">${p.name}</div><span class="price">${money(p.price)}</span>${p.oldPrice?`<span class="old">${money(p.oldPrice)}</span>`:""}<div class="meta"><span>⭐ ${p.rating||0}</span><span>${p.sold||0} vendidos</span></div><div class="meta"><span>${p.brand||""}</span><span class="${p.stock<=5?'low':''}">${p.stock>0?p.stock+" em estoque":"Esgotado"}</span></div><div class="variant-note">${(p.colors||[]).length?`${p.colors.length} cores`:""} ${(p.sizes||[]).length?`• ${p.sizes.length} tamanhos`:""}</div><button class="buy" ${p.stock<=0||p.active===false?'disabled style="opacity:.5"':''} onclick="openDetail(${p.id})">${p.active===false?"Rascunho":p.stock>0?"Ver opções":"Esgotado"}</button><button class="editbtn" style="display:${adminMode?'block':'none'}" onclick="openEditor(${p.id})">Editar produto</button></div></article>`).join("")||`<div class="empty" style="grid-column:1/-1">Nenhum produto encontrado.</div>`;updateStats()}
 function toggleFavorite(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];persistSmall();renderProducts();updateCounts()}
 function updateCounts(){$("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0);$("favCount").textContent=favorites.length}
 function updateStats(){$("statProducts").textContent=products.length;$("statStock").textContent=products.reduce((s,p)=>s+(p.stock||0),0);$("statFavs").textContent=favorites.length;$("statCart").textContent=cart.reduce((s,x)=>s+x.qty,0)}
 
-function openDetail(id){const p=products.find(x=>x.id===id);if(!p||p.stock<=0)return;detailProduct=p;selectedColor=(p.colors||[])[0]||"";selectedSize=(p.sizes||[])[0]||"";selectedMeasure=(p.measurements||[])[0]||"";detailQty=1;$("detailName").textContent=p.name;$("detailPrice").textContent=money(p.price);$("detailDescription").textContent=(p.description||"")+` • ⭐ ${p.rating||4.8} • ${p.sold||0} vendidos`;
- const media=[...(p.images||[]).map(src=>({type:"image",src})),...(p.videos||[]).map(src=>({type:"video",src}))]; const first=media[0]||{type:"image",src:firstImage(p)}; $("detailMainImage").outerHTML=first.type==="video"?`<video id="detailMainImage" controls class="video-preview" src="${first.src}"></video>`:`<img id="detailMainImage" src="${first.src}">`; $("detailThumbs").innerHTML=media.map((m,i)=>m.type==="video"?`<video src="${m.src}" onclick="selectDetailMedia(${i})"></video>`:`<img src="${m.src}" onclick="selectDetailMedia(${i})">`).join(""); renderDetailVariants(); $("detailReviews").innerHTML=`<h3>Avaliações</h3>${(p.reviews||[]).map(r=>`<div class="review"><b>${r.name} • ${"★".repeat(r.rating)}</b><p>${r.text}</p><small>${r.date||""}</small></div>`).join("")||"<p>Sem avaliações.</p>"}`; $("detailSuggestions").innerHTML=products.filter(x=>x.id!==p.id).slice(0,4).map(s=>`<div class="suggestion" onclick="openDetail(${s.id})"><img src="${firstImage(s)}"><div>${s.name}<br><b>${money(s.price)}</b></div></div>`).join(""); $("detailOverlay").style.display="flex"}
-function selectDetailMedia(i){const media=[...(detailProduct.images||[]).map(src=>({type:"image",src})),...(detailProduct.videos||[]).map(src=>({type:"video",src}))];const m=media[i];const old=$("detailMainImage");old.outerHTML=m.type==="video"?`<video id="detailMainImage" controls class="video-preview" src="${m.src}"></video>`:`<img id="detailMainImage" src="${m.src}">`}
-function selectDetailImage(i){const imgs=detailProduct.images||[firstImage(detailProduct)];$("detailMainImage").src=imgs[i];[...$("detailThumbs").children].forEach((x,n)=>x.classList.toggle("active",n===i))}
-function renderDetailVariants(){const colors=detailProduct.colors||[],sizes=detailProduct.sizes||[],measures=detailProduct.measurements||[];$("detailColorWrap").style.display=colors.length?"block":"none";$("detailSizeWrap").style.display=sizes.length?"block":"none";$("detailColors").innerHTML=colors.map(c=>`<button class="chip ${c===selectedColor?'active':''}" onclick="selectedColor=${JSON.stringify(c)};renderDetailVariants()">${c}</button>`).join("");$("detailQty").textContent=detailQty; if(measures.length&&!$("detailMeasureWrap")){const d=document.createElement("div");d.id="detailMeasureWrap";d.className="field";d.innerHTML=`<label>Medida</label><div class="chips" id="detailMeasures"></div>`;$("detailSizeWrap").after(d)} if($("detailMeasures"))$("detailMeasures").innerHTML=measures.map(m=>`<button class="chip ${m===selectedMeasure?'active':''}" onclick="selectedMeasure=${JSON.stringify(m)};renderDetailVariants()">${m}</button>`).join(""); $("detailSizes").innerHTML=sizes.map(s=>`<button class="chip ${s===selectedSize?'active':''}" onclick="selectedSize=${JSON.stringify(s)};renderDetailVariants()">${s}</button>`).join("")}
+function openDetail(id){const p=products.find(x=>x.id===id);if(!p||p.stock<=0||p.active===false)return;detailProduct=p;selectedColor="";selectedSize="";detailQty=1;$("detailName").textContent=p.name;$("detailPrice").textContent=money(p.price);$("detailDescription").textContent=(p.description||"")+` • ⭐ ${p.rating||0} • ${p.sold||0} vendidos`;
+ const media=[...(p.images||[]).map(src=>({type:"image",src})),...(p.videos||[]).map(src=>({type:"video",src}))]; const first=media[0]||{type:"image",src:firstImage(p)}; $("detailMainImage").outerHTML=first.type==="video"?`<video id="detailMainImage" controls class="video-preview" src="${first.src}"></video>`:`<img id="detailMainImage" src="${first.src}">`; $("detailThumbs").innerHTML=media.map((m,i)=>m.type==="video"?`<video src="${m.src}" onclick="selectDetailMedia(${i})"></video>`:`<img src="${m.src}" onclick="selectDetailMedia(${i})">`).join(""); renderDetailVariants(); $("detailReviews").innerHTML=`<h3>Avaliações</h3>${(p.reviews||[]).map(r=>`<div class="review"><b>${r.name} • ${"★".repeat(r.rating)}</b><p>${r.text}</p><small>${r.date||""}</small></div>`).join("")||"<p>Sem avaliações.</p>"}`; $("detailSuggestions").innerHTML=products.filter(x=>x.id!==p.id&&x.active!==false).slice(0,4).map(s=>`<div class="suggestion" onclick="openDetail(${s.id})"><img src="${firstImage(s)}"><div>${s.name}<br><b>${money(s.price)}</b></div></div>`).join(""); $("detailOverlay").style.display="flex"}
+function selectDetailMedia(i){const media=[...(detailProduct.images||[]).map(src=>({type:"image",src})),...(detailProduct.videos||[]).map(src=>({type:"video",src}))];const m=media[i];if(!m)return;const old=$("detailMainImage");old.outerHTML=m.type==="video"?`<video id="detailMainImage" controls class="video-preview" src="${m.src}"></video>`:`<img id="detailMainImage" src="${m.src}">`;[...$("detailThumbs").children].forEach((x,n)=>x.classList.toggle("active",n===i))}
+function selectDetailImage(i){selectDetailMedia(i)}
+function renderDetailVariants(){const colors=detailProduct.colors||[],sizes=detailProduct.sizes||[];$("detailColorWrap").style.display=colors.length?"block":"none";$("detailSizeWrap").style.display=sizes.length?"block":"none";$("detailColors").innerHTML=colors.map(c=>`<button class="chip ${c===selectedColor?'active':''}" onclick="selectedColor=${htmlJs(c)};renderDetailVariants()">${c}</button>`).join("");$("detailSizes").innerHTML=sizes.map(size=>`<button class="chip ${size===selectedSize?'active':''}" onclick="selectedSize=${htmlJs(size)};renderDetailVariants()">${size}</button>`).join("");$("detailColorRequired").textContent=colors.length&&!selectedColor?"Selecione uma cor para continuar.":"";$("detailSizeRequired").textContent=sizes.length&&!selectedSize?"Selecione um tamanho para continuar.":"";const measure=measurementFor(detailProduct,selectedSize);$("detailMeasurementWrap").style.display=measure?"block":"none";$("detailMeasurement").textContent=measure||"";$("detailQty").textContent=detailQty}
 function addDetailToCart(buyNow=false){
   if(!detailProduct)return;
-  const key=`${detailProduct.id}|${selectedColor}|${selectedSize}|${selectedMeasure}`;
+  if((detailProduct.colors||[]).length&&!selectedColor){alert("Escolha uma cor.");return}
+  if((detailProduct.sizes||[]).length&&!selectedSize){alert("Escolha um tamanho.");return}
+  const key=`${detailProduct.id}|${selectedColor}|${selectedSize}`;
   const item=cart.find(x=>x.key===key);
-  if(item){
-    item.qty=Math.min(detailProduct.stock||999,item.qty+detailQty);
-  }else{
-    cart.push({key,id:detailProduct.id,qty:detailQty,color:selectedColor,size:selectedSize,measure:selectedMeasure});
-  }
-  persistSmall();
-  updateCounts();
-  updateStats();
-  closeOverlay("detailOverlay");
-  if(buyNow)openCheckout();else openCart();
+  const measure=measurementFor(detailProduct,selectedSize);
+  if(item){item.qty=Math.min(detailProduct.stock||999,item.qty+detailQty);item.measure=measure}else{cart.push({key,id:detailProduct.id,qty:detailQty,color:selectedColor,size:selectedSize,measure})}
+  persistSmall();updateCounts();updateStats();closeOverlay("detailOverlay");if(buyNow)openCheckout();else openCart();
 }
 
 function openCart(){$("cartOverlay").style.display="flex";renderCart()}
@@ -545,7 +590,7 @@ function renderCart(){
   $("cartItems").innerHTML=cart.map(c=>{
     const p=products.find(x=>x.id===c.id);
     if(!p)return"";
-    return `<div class="cart-item"><img src="${firstImage(p)}"><div><h4>${p.name}</h4><p>${money(p.price*c.qty)}</p><small>${c.color?`Cor: ${c.color}`:""}${c.color&&c.size?" • ":""}${c.size?`Tam.: ${c.size}`:""}</small><button class="remove" onclick="removeCart(${JSON.stringify(c.key)})">Remover</button></div><div class="qty"><button onclick="changeQty(${JSON.stringify(c.key)},-1)">−</button><b>${c.qty}</b><button onclick="changeQty(${JSON.stringify(c.key)},1)">+</button></div></div>`;
+    return `<div class="cart-item"><img src="${firstImage(p)}"><div><h4>${p.name}</h4><p>${money(p.price*c.qty)}</p><small>${c.color?`Cor: ${c.color}`:""}${c.color&&c.size?" • ":""}${c.size?`Tam.: ${c.size}`:""}${c.measure?`<br>Medidas: ${c.measure}`:""}</small><button class="remove" onclick="removeCart(${htmlJs(c.key)})">Remover</button></div><div class="qty"><button onclick="changeQty(${htmlJs(c.key)},-1)">−</button><b>${c.qty}</b><button onclick="changeQty(${htmlJs(c.key)},1)">+</button></div></div>`;
   }).join("");
   const t=totals();
   $("cartSummary").innerHTML=`${appliedCoupon?`<div class="sumrow"><span>Cupom</span><b>${appliedCoupon.code}</b></div>`:""}<div class="sumrow"><span>Subtotal</span><b>${money(t.subtotal)}</b></div><div class="sumrow"><span>Desconto</span><b>− ${money(t.discount)}</b></div><div class="sumrow"><span>Frete</span><b>${t.shipping===0?"Grátis":money(t.shipping)}</b></div><div class="sumrow total"><span>Total</span><span>${money(t.total)}</span></div>`;
@@ -561,7 +606,7 @@ function applyCoupon(){
   renderCart();
   alert(coupon.description||"Cupom aplicado com sucesso.");
 }
-function checkoutWhatsapp(){if(!cart.length)return alert("Carrinho vazio.");if(!store.whatsapp)return alert("Configure o WhatsApp no painel ADM.");const t=totals();let lines=[`Olá! Quero fazer um pedido na ${store.brand}:`];cart.forEach(c=>{const p=products.find(x=>x.id===c.id);if(p)lines.push(`• ${c.qty}x ${p.name}${c.color?` | Cor: ${c.color}`:""}${c.size?` | Tam.: ${c.size}`:""} — ${money(p.price*c.qty)}`)});lines.push(`Subtotal: ${money(t.subtotal)}`);if(t.discount)lines.push(`Desconto: ${money(t.discount)}`);lines.push(`Frete: ${t.shipping===0?"Grátis":money(t.shipping)}`,`Total: ${money(t.total)}`);if(store.pix)lines.push(`Pix informado pela loja: ${store.pix}`);lines.push("Pode confirmar disponibilidade e prazo?");if(appliedCoupon){const saved=coupons.find(c=>c.code===appliedCoupon.code);if(saved)saved.used=Number(saved.used||0)+1;persistSmall()}window.open(`https://wa.me/55${store.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`,"_blank")}
+function checkoutWhatsapp(){if(!cart.length)return alert("Carrinho vazio.");if(!store.whatsapp)return alert("Configure o WhatsApp no painel ADM.");const t=totals();let lines=[`Olá! Quero fazer um pedido na ${store.brand}:`];cart.forEach(c=>{const p=products.find(x=>x.id===c.id);if(p)lines.push(`• ${c.qty}x ${p.name}${c.color?` | Cor: ${c.color}`:""}${c.size?` | Tam.: ${c.size}`:""}${c.measure?` | Medidas: ${c.measure}`:""} — ${money(p.price*c.qty)}`)});lines.push(`Subtotal: ${money(t.subtotal)}`);if(t.discount)lines.push(`Desconto: ${money(t.discount)}`);lines.push(`Frete: ${t.shipping===0?"Grátis":money(t.shipping)}`,`Total: ${money(t.total)}`);if(store.pix)lines.push(`Pix informado pela loja: ${store.pix}`);lines.push("Pode confirmar disponibilidade e prazo?");if(appliedCoupon){const saved=coupons.find(c=>c.code===appliedCoupon.code);if(saved)saved.used=Number(saved.used||0)+1;persistSmall()}window.open(`https://wa.me/55${store.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`,"_blank")}
 
 function openAdminLogin(){
   if(adminMode){showAdmin();return}
@@ -605,12 +650,10 @@ async function logoutAdmin(){
 
 
 
+function syncEditorImagesFromLinks(){editorImages=uniqueLines($("imageUrls").value).slice(0,8);renderEditorImages()}
 function clearImageLinks(){
   if(!confirm("Apagar todos os links de imagens deste produto?"))return;
-  $("imageUrls").value="";
-  editorImages=[];
-  renderEditorImages();
-  if($("productUploadStatus"))$("productUploadStatus").classList.add("hidden");
+  $("imageUrls").value="";editorImages=[];renderEditorImages();if($("productUploadStatus"))$("productUploadStatus").classList.add("hidden");
 }
 function clearVideoLinks(){
   if(!confirm("Apagar todos os links de vídeos deste produto?"))return;
@@ -622,24 +665,16 @@ function clearVideoLinks(){
 
 
 
-function safeFileName(name){
-  return name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^a-zA-Z0-9._-]/g,"-")
-    .replace(/-+/g,"-");
-}
-async function uploadToSupabase(file,folder="products"){
+function safeFileName(name){return name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9._-]/g,"-").replace(/-+/g,"-")}
+async function uploadToFirebase(file,folder="products"){
+  const user=firebaseAuth.currentUser;
+  if(!user||String(user.email||"").toLowerCase()!==ADMIN_EMAIL)throw new Error("Entre no painel administrativo antes de enviar arquivos.");
   const ext=(file.name.split(".").pop()||"bin").toLowerCase();
-  const baseName=safeFileName(file.name.replace(/\.[^/.]+$/,""))||"arquivo";
+  const baseName=safeFileName(file.name.replace(/\.[^/.]+$/,"")||"arquivo");
   const filePath=`${folder}/${Date.now()}-${Math.random().toString(36).slice(2,8)}-${baseName}.${ext}`;
-  const {error}=await supabaseClient.storage
-    .from(SUPABASE_BUCKET)
-    .upload(filePath,file,{cacheControl:"3600",upsert:false,contentType:file.type||undefined});
-  if(error)throw new Error(error.message||"Falha no upload.");
-  const {data}=supabaseClient.storage.from(SUPABASE_BUCKET).getPublicUrl(filePath);
-  if(!data?.publicUrl)throw new Error("Não foi possível gerar o link público.");
-  return data.publicUrl;
+  const ref=firebaseStorage.ref().child(filePath);
+  await ref.put(file,{contentType:file.type||undefined,cacheControl:"public,max-age=3600"});
+  return await ref.getDownloadURL();
 }
 
 function setUploadStatus(id,text,error=false){
@@ -651,18 +686,18 @@ function setUploadStatus(id,text,error=false){
 }
 async function uploadProductImages(){
   const files=[...$("productImages").files];
-  const existing=$("imageUrls").value.split("\n").map(x=>x.trim()).filter(Boolean);
+  const existing=uniqueLines($("imageUrls").value);
   if(!files.length)return alert("Escolha pelo menos uma imagem.");
   if(existing.length+files.length>8)return alert("O limite é de 8 fotos por produto.");
   try{
     const urls=[];
     for(let i=0;i<files.length;i++){
       setUploadStatus("productUploadStatus",`Enviando ${i+1} de ${files.length}...`);
-      const url=await uploadToSupabase(files[i],"products/images");
+      const url=await uploadToFirebase(files[i],"products/images");
       urls.push(url);
     }
-    $("imageUrls").value=[...existing,...urls].join("\n");
-    editorImages=[...existing,...urls];
+    editorImages=[...new Set([...existing,...urls])].slice(0,8);
+    $("imageUrls").value=editorImages.join("\n");
     $("productImages").value="";
     renderEditorImages();
     setUploadStatus("productUploadStatus","Fotos enviadas para a nuvem com sucesso.");
@@ -679,7 +714,7 @@ async function uploadProductVideos(){
     const urls=[];
     for(let i=0;i<files.length;i++){
       setUploadStatus("videoUploadStatus",`Enviando ${i+1} de ${files.length}...`);
-      const url=await uploadToSupabase(files[i],"products/videos");
+      const url=await uploadToFirebase(files[i],"products/videos");
       urls.push(url);
     }
     $("videoUrls").value=[...existing,...urls].join("\n");
@@ -691,21 +726,38 @@ async function uploadProductVideos(){
   }
 }
 
-async function openEditor(id){if(!adminMode)return openAdminLogin();const p=products.find(x=>x.id===id);$("editorOverlay").style.display="flex";$("editorTitle").textContent=p?"Editar produto":"Adicionar produto";$("productId").value=p?.id||"";editorImages=[...(p?.images||[])];$("imageUrls").value=(p?.images||[]).join("\n");$("videoUrls").value=(p?.videos||[]).join("\n");$("productImages").value="";$("productVideos").value="";$("productName").value=p?.name||"";$("productPrice").value=p?.price||"";$("productOldPrice").value=p?.oldPrice||"";$("productCategory").value=p?.category||"";$("productBrand").value=p?.brand||"";$("productStock").value=p?.stock??"";$("productSold").value=p?.sold??"";$("productRating").value=p?.rating||"";$("productBadge").value=p?.badge||"";$("productColors").value=(p?.colors||[]).join(", ");$("productSizes").value=(p?.sizes||[]).join(", ");$("productMeasures").value=(p?.measurements||[]).join(", ");$("videoUrls").value=(p?.videos||[]).join("\n");$("productPromo").value=String(p?.promotionActive??true);$("productPromoEnd").value=p?.promotionEnd?new Date(p.promotionEnd).toISOString().slice(0,16):"";$("productDescription").value=p?.description||"";$("deleteProductBtn").style.display=p?"block":"none";renderEditorImages()}
+
+function suggestedResalePrice(cost){const margin=Math.max(0,Number(store.resaleMargin||50))/100;const raw=Number(cost||0)*(1+margin);if(!raw)return 0;return Math.max(9.9,Math.ceil(raw/5)*5-0.1)}
+async function importShopeeProduct(){
+  const url=$("shopeeImportUrl").value.trim();
+  if(!url)return alert("Cole um link da Shopee.");
+  if(!store.importerUrl){setUploadStatus("shopeeImportStatus","Configure a URL do importador em Configurar loja.",true);return}
+  try{
+    setUploadStatus("shopeeImportStatus","Buscando informações do anúncio...");
+    const response=await fetch(store.importerUrl+"/import",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url})});
+    const payload=await response.json().catch(()=>({}));
+    if(!response.ok||!payload.ok)throw new Error(payload.error||"Não foi possível importar o anúncio.");
+    const d=payload.product||{};const resale=suggestedResalePrice(d.price);
+    $("productName").value=d.name||"";$("productPrice").value=resale?resale.toFixed(2).replace(".",","):"";$("productOldPrice").value=resale?(resale*1.25).toFixed(2).replace(".",","):"";$("productCategory").value=d.category||"Outros";$("productBrand").value=d.brand||"Sem marca";$("productStock").value=10;$("productSold").value=0;$("productRating").value=d.rating||0;$("productBadge").value="NOVIDADE";$("productColors").value=(d.colors||[]).join(", ");$("productSizes").value=(d.sizes||[]).join(", ");$("productMeasures").value=d.measurements||"";$("productDescription").value=d.description||"";$("productSourceUrl").value=d.sourceUrl||url;$("productActive").value="false";editorImages=[...new Set(d.images||[])].slice(0,8);$("imageUrls").value=editorImages.join("\n");$("videoUrls").value=[...new Set(d.videos||[])].join("\n");renderEditorImages();setUploadStatus("shopeeImportStatus",`Importado como rascunho. Custo encontrado: ${money(d.price)}. Revise tudo antes de publicar.`);
+  }catch(err){console.error(err);setUploadStatus("shopeeImportStatus",`Erro: ${err.message}`,true)}
+}
+
+async function openEditor(id){if(!adminMode)return openAdminLogin();const p=products.find(x=>x.id===id);$("editorOverlay").style.display="flex";$("editorTitle").textContent=p?"Editar produto":"Adicionar produto";$("productId").value=p?.id||"";editorImages=[...(p?.images||[])].slice(0,8);$("imageUrls").value=editorImages.join("\n");$("videoUrls").value=(p?.videos||[]).join("\n");$("productImages").value="";$("productVideos").value="";$("productName").value=p?.name||"";$("productPrice").value=p?.price||"";$("productOldPrice").value=p?.oldPrice||"";$("productCategory").value=p?.category||"";$("productBrand").value=p?.brand||"";$("productStock").value=p?.stock??"";$("productSold").value=p?.sold??"";$("productRating").value=p?.rating??"";$("productBadge").value=p?.badge||"";$("productColors").value=(p?.colors||[]).join(", ");$("productSizes").value=(p?.sizes||[]).join(", ");$("productMeasures").value=measurementsToText(p?.measurements,p?.sizes||[]);$("productPromo").value=String(p?.promotionActive??true);$("productPromoEnd").value=p?.promotionEnd?new Date(p.promotionEnd).toISOString().slice(0,16):"";$("productDescription").value=p?.description||"";$("productActive").value=String(p?.active!==false);$("productSourceUrl").value="";$("shopeeImportUrl").value="";$("deleteProductBtn").style.display=p?"block":"none";renderEditorImages();if(p){const privateData=await dbGetPrivate(p.id);$("productSourceUrl").value=privateData.sourceUrl||""}}
 async function previewSelectedImages(){const files=[...$("productImages").files];if(editorImages.length+files.length>8){alert("O limite é de 8 fotos por produto.");$("productImages").value="";return}for(const f of files)editorImages.push(await fileData(f));$("productImages").value="";renderEditorImages()}
 function renderEditorImages(){$("imagePreview").innerHTML=editorImages.map((img,i)=>`<div><img src="${img}"><button onclick="removeEditorImage(${i})">×</button></div>`).join("")}
-function removeEditorImage(i){editorImages.splice(i,1);renderEditorImages()}
+function removeEditorImage(i){editorImages.splice(i,1);$("imageUrls").value=editorImages.join("\n");renderEditorImages()}
 function closeEditor(){closeOverlay("editorOverlay");$("productImages").value=""}
 async function saveProduct(){
   if(!adminMode)return;
   try{
     const links=$("imageUrls").value.split("\n").map(x=>x.trim()).filter(Boolean);
-    if(editorImages.length+links.length>8){
+    if(links.length>8){
       alert("Use no máximo 8 fotos por produto.");
       return;
     }
     const id=Number($("productId").value)||Date.now();
     const old=products.find(x=>x.id===id);
+    const sourceUrl=$("productSourceUrl").value.trim();
     const images=[...new Set(links)];
     const data={
       id,
@@ -721,14 +773,16 @@ async function saveProduct(){
       badge:$("productBadge").value.trim(),
       colors:arr($("productColors").value),
       sizes:arr($("productSizes").value),
-      measurements:arr($("productMeasures").value),
+      measurements:parseMeasurements($("productMeasures").value,arr($("productSizes").value)),
       videos:$("videoUrls").value.split("\n").map(x=>x.trim()).filter(Boolean),
       promotionActive:$("productPromo").value==="true",
       promotionEnd:$("productPromoEnd").value?new Date($("productPromoEnd").value).getTime():(old?.promotionEnd||Date.now()+86400000),
       reviews:old?.reviews||[],
-      description:$("productDescription").value.trim()
+      description:$("productDescription").value.trim(),
+      active:$("productActive").value==="true"
     };
     await dbPut(data);
+    await dbPutPrivate(id,{sourceUrl});
     products=await dbGetAll();
     if(!categoryData.includes(data.category))categoryData.push(data.category);
     persistSmall();
@@ -741,10 +795,10 @@ async function saveProduct(){
     alert("Não foi possível salvar o produto. Verifique os campos e tente novamente.");
   }
 }
-async function deleteProduct(){const id=Number($("productId").value);if(confirm("Excluir este produto?")){await dbDelete(id);products=await dbGetAll();cart=cart.filter(x=>x.id!==id);favorites=favorites.filter(x=>x!==id);persistSmall();closeEditor();renderCategories();renderProducts();updateCounts()}}
+async function deleteProduct(){const id=Number($("productId").value);if(confirm("Excluir este produto?")){await dbDelete(id);await dbDeletePrivate(id);products=await dbGetAll();cart=cart.filter(x=>x.id!==id);favorites=favorites.filter(x=>x!==id);persistSmall();closeEditor();renderCategories();renderProducts();updateCounts()}}
 
-function openSettings(){if(!adminMode)return;$("setBrand").value=store.brand;$("setTag").value=store.tag;$("setHeroTitle").value=store.heroTitle;$("setHeroText").value=store.heroText;$("setWhatsapp").value=store.whatsapp;$("setPix").value=store.pix;$("setShipping").value=store.shipping;$("setFreeShipping").value=store.freeShipping;$("settingsOverlay").style.display="flex"}
-function saveSettings(){store={brand:$("setBrand").value.trim()||"MINHA LOJA",tag:$("setTag").value.trim(),heroTitle:$("setHeroTitle").value.trim(),heroText:$("setHeroText").value.trim(),whatsapp:$("setWhatsapp").value.replace(/\D/g,""),pix:$("setPix").value.trim(),shipping:num($("setShipping").value),freeShipping:num($("setFreeShipping").value)};persistSmall();renderStore();closeOverlay("settingsOverlay");alert("Configurações salvas.")}
+function openSettings(){if(!adminMode)return;$("setBrand").value=store.brand;$("setTag").value=store.tag;$("setHeroTitle").value=store.heroTitle;$("setHeroText").value=store.heroText;$("setWhatsapp").value=store.whatsapp;$("setPix").value=store.pix;$("setShipping").value=store.shipping;$("setFreeShipping").value=store.freeShipping;$("setResaleMargin").value=store.resaleMargin??50;$("setImporterUrl").value=store.importerUrl||"";$("settingsOverlay").style.display="flex"}
+function saveSettings(){store={...store,brand:$("setBrand").value.trim()||"RED DROP",tag:$("setTag").value.trim(),heroTitle:$("setHeroTitle").value.trim(),heroText:$("setHeroText").value.trim(),whatsapp:$("setWhatsapp").value.replace(/\D/g,""),pix:$("setPix").value.trim(),shipping:num($("setShipping").value),freeShipping:num($("setFreeShipping").value),resaleMargin:Number($("setResaleMargin").value)||50,importerUrl:$("setImporterUrl").value.trim().replace(/\/$/,"")};persistSmall();renderStore();closeOverlay("settingsOverlay");alert("Configurações salvas.")}
 function openDesign(){if(!adminMode)return;$("colorBrand").value=design.brand;$("colorBrand2").value=design.brand2;$("colorBg").value=design.bg;$("colorCard").value=design.card;$("colorText").value=design.text;$("colorHero1").value=design.hero1;$("colorHero2").value=design.hero2;$("designLogo").value="";$("designHero").value="";$("designOverlay").style.display="flex"}
 
 async function uploadDesignMedia(type){
@@ -753,7 +807,7 @@ async function uploadDesignMedia(type){
   if(!file)return alert("Escolha uma imagem.");
   try{
     setUploadStatus("designUploadStatus","Enviando imagem...");
-    const url=await uploadToSupabase(file,type==="logo"?"design/logo":"design/banner");
+    const url=await uploadToFirebase(file,type==="logo"?"design/logo":"design/banner");
     if(type==="logo")design.logo=url;
     else design.heroImage=url;
     persistSmall();applyDesign();input.value="";
@@ -765,7 +819,7 @@ async function uploadDesignMedia(type){
 }
 
 async function saveDesign(){design.brand=$("colorBrand").value;design.brand2=$("colorBrand2").value;design.bg=$("colorBg").value;design.card=$("colorCard").value;design.text=$("colorText").value;design.hero1=$("colorHero1").value;design.hero2=$("colorHero2").value;persistSmall();applyDesign();closeOverlay("designOverlay");alert("Design atualizado.")}
-function resetDesign(){if(!confirm("Restaurar as cores e imagens padrão?"))return;design={brand:"#ff5a1f",brand2:"#ff7b4d",bg:"#f4f5f7",card:"#ffffff",text:"#1f2328",hero1:"#111827",hero2:"#374151",logo:"icon-192.png",heroImage:""};persistSmall();applyDesign();openDesign()}
+function resetDesign(){if(!confirm("Restaurar as cores e imagens padrão?"))return;design={brand:"#e50914",brand2:"#8b0000",bg:"#f4f4f5",card:"#ffffff",text:"#161618",hero1:"#09090b",hero2:"#3f0a0d",logo:"icon-192.png",heroImage:""};persistSmall();applyDesign();openDesign()}
 
 function openCoupons(){
   $("couponOverlay").style.display="flex";
@@ -829,7 +883,7 @@ function renderCoupons(){
       c.expiry?`Validade: ${new Date(c.expiry+"T00:00:00").toLocaleDateString("pt-BR")}`:"",
       c.usageLimit?`Usos: ${c.used||0}/${c.usageLimit}`:""
     ].filter(Boolean).join(" • ");
-    return `<div class="listitem"><h4>${c.code} — ${benefit}</h4><small>${couponTypeLabel(c.type)}${c.description?` • ${c.description}`:""}</small>${rules?`<p class="notice">${rules}</p>`:""}<button class="btn danger" onclick="removeCoupon(${JSON.stringify(c.code)})">Excluir</button></div>`;
+    return `<div class="listitem"><h4>${c.code} — ${benefit}</h4><small>${couponTypeLabel(c.type)}${c.description?` • ${c.description}`:""}</small>${rules?`<p class="notice">${rules}</p>`:""}<button class="btn danger" onclick="removeCoupon(${htmlJs(c.code)})">Excluir</button></div>`;
   }).join("")||'<div class="empty">Nenhum cupom criado.</div>';
 }
 function removeCoupon(code){
@@ -840,10 +894,10 @@ function removeCoupon(code){
 }
 function openCategories(){$("categoryOverlay").style.display="flex";renderCategoryList()}
 function addCategory(){const c=$("newCategory").value.trim();if(c&&!categoryData.includes(c)){categoryData.push(c);$("newCategory").value="";persistSmall();renderCategoryList();renderCategories()}}
-function renderCategoryList(){$("categoryList").innerHTML=categoryData.map(c=>`<div class="listitem"><h4>${c}</h4><button class="btn danger" onclick="removeCategory(${JSON.stringify(c)})">Excluir</button></div>`).join("")}
+function renderCategoryList(){$("categoryList").innerHTML=categoryData.map(c=>`<div class="listitem"><h4>${c}</h4><button class="btn danger" onclick="removeCategory(${htmlJs(c)})">Excluir</button></div>`).join("")}
 function removeCategory(c){categoryData=categoryData.filter(x=>x!==c);persistSmall();renderCategoryList();renderCategories()}
 
-async function exportBackup(){const data={version:4,products,store,design,cart,favorites,coupons,categories:categoryData};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backup-zappylip-completo.json";a.click();URL.revokeObjectURL(a.href)}
+async function exportBackup(){const data={version:8,products,store,design,cart,favorites,coupons,categories:categoryData};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backup-reddrop-completo.json";a.click();URL.revokeObjectURL(a.href)}
 function importBackup(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=JSON.parse(r.result);if(d.products){for(const p of d.products){p.images=p.images||[p.image].filter(Boolean);p.colors=p.colors||[];p.sizes=p.sizes||[];delete p.image;await dbPut(p)}products=await dbGetAll()}store=d.store||store;design=d.design||design;cart=d.cart||[];favorites=d.favorites||[];coupons=d.coupons||[];categoryData=d.categories||categoryData;persistSmall();applyDesign();renderStore();renderCategories();renderProducts();updateCounts();alert("Backup importado.")}catch(err){console.error(err);alert("Arquivo inválido.")}};r.readAsText(f);e.target.value=""}
 
 document.querySelectorAll(".overlay").forEach(el=>el.addEventListener("click",e=>{if(e.target===el)el.style.display="none"}));
@@ -851,19 +905,16 @@ $("adminPassword").addEventListener("keydown",e=>{if(e.key==="Enter")checkAdmin(
 
 firebaseAuth.onAuthStateChanged(user=>{
   adminMode=!!(user&&user.email&&user.email.toLowerCase()===ADMIN_EMAIL);
-  if(adminMode){
-    $("adminPanel").style.display="block";
-  }else{
-    $("adminPanel").style.display="none";
-  }
+  currentUser=user&&!adminMode?{name:user.displayName||user.email.split("@")[0],email:user.email}:null;
+  $("adminPanel").style.display=adminMode?"block":"none";
   renderProducts();
 });
 
 
-function openAccount(ret=false){const s=$("accountSheet");if(currentUser){s.innerHTML=`<h3>Minha conta</h3><p><b>${currentUser.name}</b><br>${currentUser.email}</p><button class="btn primary" style="width:100%" onclick="openMyOrders()">Meus pedidos</button><button class="btn secondary" style="width:100%;margin-top:8px" onclick="currentUser=null;localStorage.removeItem('v7_current_user');closeOverlay('accountOverlay')">Sair</button>`}else{s.innerHTML=`<h3>Entrar ou cadastrar</h3><div class="field"><label>Nome</label><input id="uName"></div><div class="field"><label>E-mail</label><input id="uEmail"></div><div class="field"><label>Senha</label><input id="uPass" type="password"></div><div class="actions"><button class="btn secondary" onclick="loginUser(${ret})">Entrar</button><button class="btn primary" onclick="registerUser(${ret})">Cadastrar</button></div>`}$("accountOverlay").style.display="flex"}
-function registerUser(ret){const u={name:$("uName").value.trim(),email:$("uEmail").value.trim().toLowerCase(),password:$("uPass").value};if(!u.name||!u.email||u.password.length<4)return alert("Preencha os dados.");if(users.some(x=>x.email===u.email))return alert("E-mail já cadastrado.");users.push(u);currentUser=u;localStorage.setItem("v7_current_user",JSON.stringify(u));persistSmall();closeOverlay("accountOverlay");ret&&openCheckout()}
-function loginUser(ret){const u=users.find(x=>x.email===$("uEmail").value.trim().toLowerCase()&&x.password===$("uPass").value);if(!u)return alert("E-mail ou senha incorretos.");currentUser=u;localStorage.setItem("v7_current_user",JSON.stringify(u));closeOverlay("accountOverlay");ret&&openCheckout()}
-function openCheckout(){if(!cart.length)return alert("Carrinho vazio.");if(!currentUser)return openAccount(true);const t=totals();$("checkoutSheet").innerHTML=`<h3>Finalizar compra</h3><div class="field"><label>Nome completo</label><input id="coName" value="${currentUser.name||''}"></div><div class="two"><div class="field"><label>CPF</label><input id="coCpf"></div><div class="field"><label>CEP</label><input id="coCep"></div></div><div class="field"><label>Endereço</label><input id="coAddress"></div><div class="two"><div class="field"><label>Número</label><input id="coNumber"></div><div class="field"><label>Complemento</label><input id="coComp"></div></div><div class="field"><label>Pagamento</label><select id="coPayment"><option>Pix</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Boleto</option></select></div><div class="summary"><div class="sumrow total"><span>Total</span><span>${money(t.total)}</span></div></div><label style="font-size:11px"><input type="checkbox" id="agree"> Aceito termos e políticas.</label><button class="btn primary" style="width:100%;margin-top:10px" onclick="finishOrder()">Confirmar pedido</button>`;$("checkoutOverlay").style.display="flex"}
+function openAccount(ret=false){const s=$("accountSheet");if(currentUser){s.innerHTML=`<h3>Minha conta</h3><p><b>${currentUser.name}</b><br>${currentUser.email}</p><button class="btn primary" style="width:100%" onclick="openMyOrders()">Meus pedidos</button><button class="btn secondary" style="width:100%;margin-top:8px" onclick="firebaseAuth.signOut();closeOverlay('accountOverlay')">Sair</button>`}else{s.innerHTML=`<h3>Entrar ou cadastrar</h3><div class="field"><label>Nome</label><input id="uName" autocomplete="name"></div><div class="field"><label>E-mail</label><input id="uEmail" type="email" autocomplete="email"></div><div class="field"><label>Senha</label><input id="uPass" type="password" minlength="6" autocomplete="current-password"></div><div class="actions"><button class="btn secondary" onclick="loginUser(${ret})">Entrar</button><button class="btn primary" onclick="registerUser(${ret})">Cadastrar</button></div>`}$("accountOverlay").style.display="flex"}
+async function registerUser(ret){const name=$("uName").value.trim(),email=$("uEmail").value.trim().toLowerCase(),password=$("uPass").value;if(!name||!email||password.length<6)return alert("Preencha os dados e use uma senha com pelo menos 6 caracteres.");try{const cred=await firebaseAuth.createUserWithEmailAndPassword(email,password);await cred.user.updateProfile({displayName:name});currentUser={name,email};closeOverlay("accountOverlay");ret&&openCheckout()}catch(err){alert(err.code==="auth/email-already-in-use"?"Este e-mail já está cadastrado.":"Não foi possível cadastrar: "+err.message)}}
+async function loginUser(ret){const email=$("uEmail").value.trim().toLowerCase(),password=$("uPass").value;try{const cred=await firebaseAuth.signInWithEmailAndPassword(email,password);currentUser={name:cred.user.displayName||email.split("@")[0],email};closeOverlay("accountOverlay");ret&&openCheckout()}catch(err){alert("E-mail ou senha incorretos.")}}
+function openCheckout(){if(!cart.length)return alert("Carrinho vazio.");if(!currentUser)return openAccount(true);const t=totals();$("checkoutSheet").innerHTML=`<h3>Finalizar compra</h3><div class="field"><label>Nome completo</label><input id="coName" value="${currentUser.name||''}"></div><div class="two"><div class="field"><label>CPF</label><input id="coCpf"></div><div class="field"><label>CEP</label><input id="coCep"></div></div><div class="field"><label>Endereço</label><input id="coAddress"></div><div class="two"><div class="field"><label>Número</label><input id="coNumber"></div><div class="field"><label>Complemento</label><input id="coComp"></div></div><div class="field"><label>Pagamento</label><select id="coPayment"><option>Pix — confirmação pelo WhatsApp</option><option>Combinar pelo WhatsApp</option></select></div><div class="summary"><div class="sumrow total"><span>Total</span><span>${money(t.total)}</span></div></div><label style="font-size:11px"><input type="checkbox" id="agree"> Aceito termos e políticas.</label><button class="btn primary" style="width:100%;margin-top:10px" onclick="finishOrder()">Confirmar pedido</button>`;$("checkoutOverlay").style.display="flex"}
 async function finishOrder(){
   if(!$("agree").checked)return alert("Aceite os termos.");
   const cpf=$("coCpf").value.replace(/\D/g,''),cep=$("coCep").value.replace(/\D/g,'');
@@ -881,14 +932,14 @@ async function finishOrder(){
     persistSmall();
     updateCounts();
     closeOverlay("checkoutOverlay");
-    alert("Pedido criado. Envie a confirmação pelo WhatsApp.");
+    alert("Pedido criado. Finalize a confirmação pelo WhatsApp.");
     openMyOrders();
   }catch(err){
     console.error(err);
     alert("Não foi possível registrar o pedido. Tente novamente.");
   }
 }
-function openMyOrders(){$("ordersSheet").innerHTML=`<h3>Meus pedidos</h3>${orders.filter(o=>currentUser&&o.user===currentUser.email).map(o=>`<div class="listitem"><b>#${o.id}</b><br>${money(o.total)} • ${o.status}<br><small>${o.date}</small></div>`).join('')||'<p>Nenhum pedido.</p>'}`;$("ordersOverlay").style.display="flex"}
+async function openMyOrders(){if(!currentUser)return openAccount();try{const snap=await cloudDB.collection("orders").where("user","==",currentUser.email).get();const mine=snap.docs.map(d=>d.data()).sort((a,b)=>Number(b.id)-Number(a.id));$("ordersSheet").innerHTML=`<h3>Meus pedidos</h3>${mine.map(o=>`<div class="listitem"><b>#${o.id}</b><br>${money(o.total)} • ${o.status}<br><small>${o.date}</small></div>`).join('')||'<p>Nenhum pedido.</p>'}`;$("ordersOverlay").style.display="flex"}catch(err){console.error(err);alert("Não foi possível carregar seus pedidos.")}}
 
 async function updateOrderStatus(id,status){
   if(!adminMode)return;
@@ -902,7 +953,9 @@ function openPolicies(){const edit=adminMode;$("policySheet").innerHTML=edit?`<h
 function openChat(){const mine=chatMessages.filter(m=>!currentUser||m.user===currentUser.email);$("chatSheet").innerHTML=`<h3>Atendimento</h3><div class="chatlog">${mine.map(m=>`<div class="msg ${m.from==='client'?'mine':'theirs'}">${m.text}</div>`).join('')}</div><div class="two" style="margin-top:8px"><input id="chatInput" placeholder="Digite sua mensagem"><button class="btn primary" onclick="sendChat()">Enviar</button></div><button class="btn secondary" style="width:100%;margin-top:8px" onclick="window.open('https://wa.me/${store.whatsapp}','_blank')">WhatsApp</button>`;$("chatOverlay").style.display="flex"}
 function sendChat(){if(!currentUser)return openAccount();const text=$("chatInput").value.trim();if(!text)return;chatMessages.push({id:Date.now(),user:currentUser.email,from:'client',text});persistSmall();openChat()}
 
-(async()=>{try{await initProducts();applyDesign();renderStore();renderCategories();renderProducts();updateCounts();if(adminMode)$("adminPanel").style.display="block"}catch(err){console.error(err);alert("Não foi possível conectar ao Firebase. Confirme se o Firestore foi criado e está em modo de teste.")}})();
+window.__REDDROP_SCRIPT_LOADED__=true;
+(async()=>{try{await initProducts();
+  migrateLegacyBrand();applyDesign();renderStore();renderCategories();renderProducts();updateCounts();if(adminMode)$("adminPanel").style.display="block"}catch(err){console.error(err);alert("Não foi possível conectar ao Firebase. Confira as regras e a conexão do projeto.")}})();
 
 </script>
 </body>

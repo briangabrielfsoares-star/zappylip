@@ -1,0 +1,16 @@
+ZAPPYLIP — CLOUDINARY CORRIGIDO
+
+Upload preset configurado:
+zappylip_upload
+
+Cloud name:
+nvpoyzms
+
+PUBLICAÇÃO
+1. Extraia este ZIP.
+2. No GitHub, envie os arquivos novos substituindo os antigos.
+3. Clique em Commit changes.
+4. Espere a Cloudflare terminar o novo deploy.
+5. Abra o site da Cloudflare e tente enviar uma imagem.
+
+No Cloudinary, o preset zappylip_upload precisa estar salvo como Unsigned.

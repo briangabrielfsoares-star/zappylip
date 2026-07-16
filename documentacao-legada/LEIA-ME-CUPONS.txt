@@ -1,0 +1,22 @@
+ZAPPYLIP — CUPONS AVANÇADOS
+
+Tipos disponíveis no painel ADM:
+- Desconto percentual
+- Desconto em reais
+- Frete grátis
+- Percentual + frete grátis
+- Percentual somente para uma categoria
+
+Regras configuráveis:
+- Compra mínima
+- Desconto máximo
+- Categoria
+- Data de validade
+- Limite de usos no navegador
+- Descrição do benefício
+
+PUBLICAÇÃO:
+1. Extraia o ZIP.
+2. Publique todos os arquivos no MESMO projeto do Netlify.
+3. Abra o site com Ctrl+F5 ou em aba anônima.
+4. Entre no Painel ADM > Cupons.

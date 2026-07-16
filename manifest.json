@@ -1,11 +1,11 @@
 {
-  "name": "Zappylip V7",
-  "short_name": "Zappylip",
+  "name": "RedDrop",
+  "short_name": "RedDrop",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ff5a1f",
+  "background_color": "#09090b",
+  "theme_color": "#e50914",
   "icons": [
     {
       "src": "icon-192.png",

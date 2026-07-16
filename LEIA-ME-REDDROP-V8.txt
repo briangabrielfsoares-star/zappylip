@@ -1,0 +1,33 @@
+REDDROP V8 — VERSÃO CORRIGIDA
+
+O QUE FOI CORRIGIDO
+- Limite de 8 fotos agora conta URLs únicas, sem duplicar.
+- Remover uma foto atualiza também o campo de links.
+- Cores e tamanhos exigem seleção antes do carrinho.
+- Medidas deixam de ser botões e aparecem conforme o tamanho escolhido.
+- Medidas aceitam vírgula decimal porque cada tamanho usa uma linha.
+- Carrinho e pedido guardam cor, tamanho e medida correspondente.
+- Produtos podem ser salvos como rascunho.
+- Cadastro de clientes usa Firebase Authentication; senhas não ficam no navegador.
+- Pedidos do cliente são carregados do Firestore.
+- Novas mídias usam Firebase Storage com acesso administrativo.
+- Identidade principal alterada para RedDrop.
+- Base do importador por link da Shopee incluída.
+- O link do fornecedor fica em product_private, coleção visível somente para o administrador.
+
+ANTES DO COMMIT
+1. Faça backup do repositório atual.
+2. No Firebase Authentication, ative E-mail/Senha.
+3. No Firestore, publique o arquivo firestore.rules.
+4. Ative Firebase Storage e publique firebase-storage.rules.
+5. Não execute as antigas políticas públicas do Supabase. Os links antigos continuam funcionando.
+6. Teste o site localmente e depois envie todos os arquivos para o GitHub.
+
+IMPORTADOR SHOPEE
+Veja a pasta cloudflare-worker-importador. Depois de publicar o Worker, coloque a URL em Configurar loja. O anúncio será importado como rascunho. A Shopee pode bloquear ou alterar a estrutura, então sempre revise tudo.
+
+PAGAMENTOS
+Esta versão continua com pedido manual/WhatsApp. Cartão, boleto e confirmação automática ainda exigem gateway de pagamento e backend seguro.
+
+DADOS EXISTENTES
+O projeto Firebase, as coleções products/app/orders e os IDs não foram trocados. O commit dos arquivos não apaga os produtos salvos no Firestore.

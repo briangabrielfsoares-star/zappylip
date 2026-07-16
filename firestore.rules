@@ -1,32 +1,35 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-
     function isAdmin() {
       return request.auth != null
         && request.auth.token.email == "briangabrielfsoares@gmail.com";
     }
-
+    function isOwnerEmail(email) {
+      return request.auth != null && request.auth.token.email == email;
+    }
     match /products/{productId} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }
-
     match /app/{documentId} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }
-
+    match /product_private/{productId} {
+      allow read, create, update, delete: if isAdmin();
+    }
     match /orders/{orderId} {
-      allow create: if
-        request.resource.data.id is int
+      allow create: if request.auth != null
+        && request.resource.data.id is int
         && request.resource.data.user is string
+        && isOwnerEmail(request.resource.data.user)
         && request.resource.data.items is list
         && request.resource.data.total is number
         && request.resource.data.status == "Aguardando confirmação";
-      allow read, update, delete: if isAdmin();
+      allow read: if isAdmin() || isOwnerEmail(resource.data.user);
+      allow update, delete: if isAdmin();
     }
-
     match /{document=**} {
       allow read, write: if false;
     }

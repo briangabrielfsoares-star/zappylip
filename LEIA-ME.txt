@@ -1,7 +1,3 @@
-ZAPPYLIP V7
+REDDROP V8
 
-Envie todos os arquivos desta pasta para o mesmo projeto no Netlify.
-
-Inclui: vídeos, fotos, cores, tamanhos, medidas específicas, quantidade, avaliações, vendidos, promoção com contagem regressiva, sugestões, cupons, cadastro/login, checkout com CPF/CEP/endereço, formas de pagamento, chat, pedidos e política de troca/devolução editável.
-
-ATENÇÃO: login, chat, pedidos e pagamentos são um protótipo local. Para uma loja real sincronizada entre aparelhos, será necessário Firebase/Supabase e um gateway de pagamento.
+Leia primeiro o arquivo LEIA-ME-REDDROP-V8.txt.

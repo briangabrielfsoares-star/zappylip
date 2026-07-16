@@ -1,0 +1,8 @@
+ATUALIZAÇÃO — APAGAR LINKS
+
+Foram adicionados dois botões no editor de produto:
+- Apagar todos os links das imagens
+- Apagar todos os links dos vídeos
+
+Assim você não precisa selecionar manualmente links grandes dentro do campo.
+Depois de apagar, clique em Salvar para atualizar o produto.

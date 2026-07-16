@@ -1,0 +1,15 @@
+ZAPPYLIP — SUPABASE STORAGE
+
+1. Supabase > SQL Editor > New query.
+2. Cole o conteúdo de supabase-storage.sql.
+3. Clique em Run.
+4. Extraia este ZIP.
+5. Envie os arquivos novos ao GitHub, substituindo os antigos.
+6. Clique em Commit changes.
+7. Espere a Cloudflare concluir o deploy.
+8. Abra o site, entre no ADM e teste uma imagem.
+
+Bucket: media
+Project URL: https://hkoqdlinuhnywznqfdgz.supabase.co
+
+Esta versão não usa Cloudinary.
