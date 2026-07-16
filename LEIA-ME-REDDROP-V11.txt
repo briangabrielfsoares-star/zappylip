@@ -1,0 +1,9 @@
+RED DROP V11 — CADASTRO RÁPIDO
+
+1. A importação automática continua disponível.
+2. Se a Shopee responder 403, o painel abre um cadastro rápido.
+3. Informe nome e preço de compra. Categoria e marca são opcionais.
+4. O sistema calcula o preço de venda usando a margem configurada, marca como rascunho e salva o link do fornecedor.
+5. Adicione fotos, cores, tamanhos e revise antes de publicar.
+
+Publicação: substitua os arquivos no mesmo repositório do GitHub e aguarde o deploy da Cloudflare.
