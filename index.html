@@ -207,7 +207,7 @@ const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
   <div class="field"><label>WhatsApp com DDD</label><input id="setWhatsapp"></div>
   <div class="field"><label>Chave Pix</label><input id="setPix"></div>
   <div class="two"><div class="field"><label>Frete padrão</label><input id="setShipping" placeholder="12,00"></div><div class="field"><label>Frete grátis acima</label><input id="setFreeShipping" placeholder="150,00"></div></div>
-  <div class="two"><div class="field"><label>Margem sugerida na importação (%)</label><input id="setResaleMargin" inputmode="decimal" placeholder="50"></div><div class="field"><label>URL do importador Shopee</label><input id="setImporterUrl" placeholder="https://seu-worker.workers.dev"></div></div>
+  <div class="two"><div class="field"><label>Margem sugerida na importação (%)</label><input id="setResaleMargin" inputmode="decimal" placeholder="50"></div><div class="field"><label>URL do importador Shopee</label><input id="setImporterUrl" placeholder="https://reddrop-importador.seunome.workers.dev"></div></div>
   <div class="actions"><button class="btn secondary" onclick="closeOverlay('settingsOverlay')">Cancelar</button><button class="btn primary" onclick="saveSettings()">Salvar</button></div>
 </div></div>
 
@@ -734,9 +734,10 @@ async function importShopeeProduct(){
   if(!store.importerUrl){setUploadStatus("shopeeImportStatus","Configure a URL do importador em Configurar loja.",true);return}
   try{
     setUploadStatus("shopeeImportStatus","Buscando informações do anúncio...");
-    const response=await fetch(store.importerUrl+"/import",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url})});
-    const payload=await response.json().catch(()=>({}));
-    if(!response.ok||!payload.ok)throw new Error(payload.error||"Não foi possível importar o anúncio.");
+    const importerBase=String(store.importerUrl||"").trim().replace(/\/+$/,"");
+    const response=await fetch(importerBase+"/import",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url})});
+    const rawText=await response.text();let payload={};try{payload=JSON.parse(rawText)}catch(_){payload={error:rawText||`O importador respondeu ${response.status}.`}}
+    if(!response.ok||!payload.ok){const detail=payload?.diagnostic?.attempts?.map(a=>a.status||a.error).filter(Boolean).join(", ");throw new Error((payload.error||"Não foi possível importar o anúncio.")+(detail?` [${detail}]`:""));}
     const d=payload.product||{};const resale=suggestedResalePrice(d.price);
     $("productName").value=d.name||"";$("productPrice").value=resale?resale.toFixed(2).replace(".",","):"";$("productOldPrice").value=resale?(resale*1.25).toFixed(2).replace(".",","):"";$("productCategory").value=d.category||"Outros";$("productBrand").value=d.brand||"Sem marca";$("productStock").value=10;$("productSold").value=0;$("productRating").value=d.rating||0;$("productBadge").value="NOVIDADE";$("productColors").value=(d.colors||[]).join(", ");$("productSizes").value=(d.sizes||[]).join(", ");$("productMeasures").value=d.measurements||"";$("productDescription").value=d.description||"";$("productSourceUrl").value=d.sourceUrl||url;$("productActive").value="false";editorImages=[...new Set(d.images||[])].slice(0,8);$("imageUrls").value=editorImages.join("\n");$("videoUrls").value=[...new Set(d.videos||[])].join("\n");renderEditorImages();setUploadStatus("shopeeImportStatus",`Importado como rascunho. Custo encontrado: ${money(d.price)}. Revise tudo antes de publicar.`);
   }catch(err){console.error(err);setUploadStatus("shopeeImportStatus",`Erro: ${err.message}`,true)}

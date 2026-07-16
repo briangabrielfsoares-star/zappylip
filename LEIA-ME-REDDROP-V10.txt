@@ -1,0 +1,11 @@
+REDDROP V10 — IMPORTADOR 2.0
+
+- Worker separado do site.
+- Endpoint de teste GET / e GET /health.
+- Importação POST /import.
+- Mais de uma tentativa de consulta à Shopee.
+- Erros detalhados no painel.
+- Remove barra final automaticamente da URL configurada.
+- Produto continua entrando como rascunho.
+
+ATENÇÃO: publique o Worker separado chamado reddrop-importador. Não substitua o Worker/site zappylip.

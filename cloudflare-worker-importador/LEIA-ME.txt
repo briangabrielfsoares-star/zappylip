@@ -1,10 +1,18 @@
-IMPORTADOR SHOPEE — CLOUDFLARE WORKER
+IMPORTADOR REDDROP 2.0 — PASSO RÁPIDO
 
-1. Entre no Cloudflare Dashboard > Workers & Pages > Create Worker.
-2. Cole o conteúdo de worker.js e publique.
-3. Copie a URL terminada em workers.dev.
-4. No painel da RedDrop: Configurar loja > URL do importador Shopee.
-5. Cole a URL e salve.
-6. Ao importar, o produto entra como RASCUNHO. Revise preço, fotos, marca, medidas e variações antes de publicar.
+Este Worker deve ser criado SEPARADO do site da loja.
 
-IMPORTANTE: a Shopee pode alterar ou bloquear o endpoint. O importador é assistido, não uma garantia permanente. Use imagens e descrições apenas com autorização do fornecedor.
+1. Cloudflare > Workers & Pages > Create > Worker.
+2. Nome: reddrop-importador.
+3. Abra Edit code.
+4. Apague o código de exemplo.
+5. Cole todo o conteúdo de worker.js.
+6. Clique em Deploy.
+7. Abra a URL do Worker. Deve aparecer:
+   {"ok":true,"service":"RedDrop Importador Shopee",...}
+8. Copie a URL sem barra final.
+9. Na RedDrop: Configurar loja > URL do importador Shopee > cole e salve.
+
+NÃO use a URL do site zappylip como importador. Crie um Worker separado.
+
+Observação: a Shopee pode bloquear consultas automáticas. O sistema tenta mais de um endpoint e mostra um erro claro quando isso ocorrer. Todo produto importado deve ser revisado antes de publicar.

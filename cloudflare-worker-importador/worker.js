@@ -1,90 +1,230 @@
-const cors = (origin = "*") => ({
-  "Access-Control-Allow-Origin": origin,
-  "Access-Control-Allow-Methods": "POST,OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-  "Content-Type": "application/json; charset=utf-8"
-});
+const JSON_HEADERS = {
+  "Content-Type": "application/json; charset=utf-8",
+  "Cache-Control": "no-store"
+};
 
-function json(body, status = 200, origin = "*") {
+function cors(origin = "*") {
+  return {
+    ...JSON_HEADERS,
+    "Access-Control-Allow-Origin": origin || "*",
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+  };
+}
+
+function reply(body, status = 200, origin = "*") {
   return new Response(JSON.stringify(body), { status, headers: cors(origin) });
 }
 
-function priceToBRL(value) {
+function cleanText(value) {
+  return String(value ?? "").replace(/\u0000/g, "").trim();
+}
+
+function unique(values) {
+  return [...new Set((values || []).map(cleanText).filter(Boolean))];
+}
+
+function shopeePrice(value) {
   const n = Number(value || 0);
-  return n > 10000 ? n / 100000 : n;
+  if (!Number.isFinite(n) || n <= 0) return 0;
+  return n >= 100000 ? n / 100000 : n;
 }
 
-function extractIds(url) {
-  const decoded = decodeURIComponent(url);
-  const match = decoded.match(/-i\.(\d+)\.(\d+)/) || decoded.match(/[?&]shopid=(\d+).*?[?&]itemid=(\d+)/);
-  return match ? { shopId: match[1], itemId: match[2] } : null;
+function extractIds(input) {
+  let decoded = String(input || "");
+  try { decoded = decodeURIComponent(decoded); } catch (_) {}
+  const patterns = [
+    /-i\.(\d+)\.(\d+)/i,
+    /[?&]shopid=(\d+).*?[?&]itemid=(\d+)/i,
+    /[?&]shop_id=(\d+).*?[?&]item_id=(\d+)/i,
+    /\/product\/(\d+)\/(\d+)/i
+  ];
+  for (const pattern of patterns) {
+    const match = decoded.match(pattern);
+    if (match) return { shopId: match[1], itemId: match[2] };
+  }
+  return null;
 }
 
-async function resolveUrl(url) {
-  const response = await fetch(url, { redirect: "follow", headers: { "User-Agent": "Mozilla/5.0" } });
+async function resolveShortUrl(url) {
+  if (!/shp\.ee|s\.shopee/i.test(url)) return url;
+  const response = await fetch(url, {
+    redirect: "follow",
+    headers: { "User-Agent": "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 Chrome/124 Mobile Safari/537.36" }
+  });
   return response.url || url;
 }
 
-function getAttribute(item, name) {
-  const attrs = item.attributes || [];
-  const found = attrs.find(a => String(a.name || "").toLowerCase().includes(name));
-  return found?.value || "";
+function browserHeaders(referer) {
+  return {
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.7",
+    "Referer": referer,
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "X-Requested-With": "XMLHttpRequest",
+    "X-API-SOURCE": "pc"
+  };
+}
+
+async function fetchJson(url, referer) {
+  const response = await fetch(url, { headers: browserHeaders(referer), redirect: "follow" });
+  const text = await response.text();
+  let data = null;
+  try { data = JSON.parse(text); } catch (_) {}
+  return { response, data, text };
+}
+
+function normalizeItem(raw) {
+  if (!raw) return null;
+  return raw.data?.item || raw.data || raw.item || raw;
+}
+
+async function getShopeeItem(ids, referer) {
+  const endpoints = [
+    `https://shopee.com.br/api/v4/pdp/get_pc?item_id=${ids.itemId}&shop_id=${ids.shopId}`,
+    `https://shopee.com.br/api/v4/item/get?itemid=${ids.itemId}&shopid=${ids.shopId}`,
+    `https://mall.shopee.com.br/api/v4/item/get?itemid=${ids.itemId}&shopid=${ids.shopId}`
+  ];
+  const attempts = [];
+  for (const endpoint of endpoints) {
+    try {
+      const result = await fetchJson(endpoint, referer);
+      attempts.push({ endpoint, status: result.response.status });
+      if (result.response.ok) {
+        const item = normalizeItem(result.data);
+        if (item?.name) return { item, attempts };
+      }
+    } catch (error) {
+      attempts.push({ endpoint, error: error.message });
+    }
+  }
+  return { item: null, attempts };
+}
+
+function attributeValue(item, names) {
+  const attrs = item.attributes || item.attributes_new || [];
+  for (const attr of attrs) {
+    const name = cleanText(attr.name || attr.display_name).toLowerCase();
+    if (!names.some(n => name.includes(n))) continue;
+    const value = attr.value || attr.value_name || attr.values?.map(v => v.name || v.value).join(", ");
+    if (value) return cleanText(value);
+  }
+  return "";
+}
+
+function imageUrl(id) {
+  const value = cleanText(id);
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `https://down-br.img.susercontent.com/file/${value}`;
+}
+
+function parseVariations(item) {
+  const tiers = item.tier_variations || item.tier_variation || [];
+  const colors = [];
+  const sizes = [];
+  const others = [];
+  for (const tier of tiers) {
+    const label = cleanText(tier.name).toLowerCase();
+    const options = (tier.options || tier.option_list || []).map(o => typeof o === "string" ? o : (o.option || o.name || o.value));
+    if (/cor|color|estampa/.test(label)) colors.push(...options);
+    else if (/tamanho|size|numera|voltagem|capacidade/.test(label)) sizes.push(...options);
+    else others.push(...options);
+  }
+  return { colors: unique(colors), sizes: unique(sizes), others: unique(others) };
+}
+
+function parseVideos(item) {
+  const candidates = [
+    ...(item.video_info_list || []),
+    ...(item.video_info ? [item.video_info] : []),
+    ...(item.videos || [])
+  ];
+  const urls = [];
+  for (const video of candidates) {
+    if (typeof video === "string") urls.push(video);
+    else urls.push(video.video_url, video.url, ...(video.video_url_list || []));
+  }
+  return unique(urls);
+}
+
+function categoryName(item) {
+  const cats = item.categories || item.category_list || [];
+  const last = cats[cats.length - 1] || {};
+  return cleanText(last.display_name || last.cat_name || last.name || item.category) || "Outros";
+}
+
+function buildProduct(item, sourceUrl) {
+  const variations = parseVariations(item);
+  const rawImages = item.images || item.image_list || (item.image ? [item.image] : []);
+  const images = unique(rawImages.map(imageUrl)).slice(0, 8);
+  const price = shopeePrice(item.price_min || item.price || item.price_max || item.models?.[0]?.price);
+  const oldPrice = shopeePrice(item.price_before_discount || item.price_max_before_discount || item.price_min_before_discount);
+  const rating = Number(item.item_rating?.rating_star || item.rating_star || item.rating || 0);
+  return {
+    sourceUrl,
+    name: cleanText(item.name),
+    description: cleanText(item.description || item.description_plain || ""),
+    price,
+    oldPrice,
+    category: categoryName(item),
+    brand: attributeValue(item, ["marca", "brand"]) || cleanText(item.brand) || "Sem marca",
+    stock: Number(item.stock || item.normal_stock || item.models?.reduce((sum, model) => sum + Number(model.stock || 0), 0) || 0),
+    sold: Number(item.historical_sold || item.sold || item.global_sold || 0),
+    rating: Number.isFinite(rating) ? Number(rating.toFixed(1)) : 0,
+    colors: variations.colors,
+    sizes: variations.sizes.length ? variations.sizes : variations.others,
+    images,
+    videos: parseVideos(item),
+    measurements: attributeValue(item, ["medida", "dimens", "tamanho do produto"])
+  };
 }
 
 export default {
   async fetch(request, env) {
     const requestOrigin = request.headers.get("Origin") || "*";
-    const allowed = env.ALLOWED_ORIGIN || "*";
-    const origin = allowed === "*" || requestOrigin === allowed ? requestOrigin : allowed;
+    const allowedOrigin = env.ALLOWED_ORIGIN || "*";
+    const origin = allowedOrigin === "*" || allowedOrigin === requestOrigin ? requestOrigin : allowedOrigin;
+    const route = new URL(request.url);
+
     if (request.method === "OPTIONS") return new Response(null, { headers: cors(origin) });
-    const urlObj = new URL(request.url);
-    if (request.method !== "POST" || urlObj.pathname !== "/import") return json({ ok:false, error:"Rota inválida." },404,origin);
+
+    if (request.method === "GET" && (route.pathname === "/" || route.pathname === "/health")) {
+      return reply({ ok: true, service: "RedDrop Importador Shopee", version: "2.0.0", route: "POST /import" }, 200, origin);
+    }
+
+    if (request.method !== "POST" || route.pathname !== "/import") {
+      return reply({ ok: false, error: "Use POST /import." }, 404, origin);
+    }
+
     try {
-      const body = await request.json();
-      if (!/^https?:\/\//i.test(body.url || "")) return json({ ok:false,error:"Link inválido." },400,origin);
-      const resolved = await resolveUrl(body.url);
-      const ids = extractIds(resolved);
-      if (!ids) return json({ ok:false,error:"Não consegui identificar o produto. Abra o anúncio completo da Shopee e copie o link novamente." },422,origin);
-      const api = `https://shopee.com.br/api/v4/item/get?itemid=${ids.itemId}&shopid=${ids.shopId}`;
-      const response = await fetch(api, { headers: {
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36",
-        "Referer":resolved,
-        "Accept":"application/json"
-      }});
-      if (!response.ok) throw new Error(`Shopee respondeu ${response.status}.`);
-      const raw = await response.json();
-      const item = raw.data || raw.item || raw;
-      if (!item?.name) throw new Error("A Shopee não liberou os dados deste anúncio.");
-      const tiers = item.tier_variations || [];
-      const variationNames = tiers.map(t => String(t.name || "").toLowerCase());
-      const colors = [];
-      const sizes = [];
-      tiers.forEach((tier,index) => {
-        const options = (tier.options || []).map(String).filter(Boolean);
-        const name = variationNames[index] || "";
-        if (/cor|color/.test(name)) colors.push(...options);
-        else if (/tamanho|size|numera/.test(name)) sizes.push(...options);
-      });
-      const imageIds = item.images || (item.image ? [item.image] : []);
-      const images = imageIds.slice(0,8).map(id => `https://down-br.img.susercontent.com/file/${id}`);
-      const videoCandidates = [
-        ...(item.video_info_list || []),
-        ...(item.video_info ? [item.video_info] : [])
-      ];
-      const videos = videoCandidates.map(v => v.video_url || v.video_url_list?.[0] || v.url).filter(Boolean);
-      const price = priceToBRL(item.price_min || item.price || item.price_max);
-      const oldPrice = priceToBRL(item.price_before_discount || item.price_max_before_discount || 0);
-      const rating = Number(item.item_rating?.rating_star || item.rating_star || 0).toFixed(1);
-      const category = item.categories?.at?.(-1)?.display_name || item.categories?.at?.(-1)?.cat_name || "Outros";
-      const brand = getAttribute(item,"marca") || item.brand || "Sem marca";
-      return json({ ok:true, product:{
-        sourceUrl:resolved,name:item.name,description:item.description || "",price,oldPrice,
-        category,brand,stock:item.stock || 0,sold:item.historical_sold || item.sold || 0,
-        rating:Number(rating),colors:[...new Set(colors)],sizes:[...new Set(sizes)],images,videos,
-        measurements:""
-      }},200,origin);
+      const body = await request.json().catch(() => ({}));
+      const inputUrl = cleanText(body.url);
+      if (!/^https?:\/\//i.test(inputUrl) || !/shopee|shp\.ee/i.test(inputUrl)) {
+        return reply({ ok: false, error: "Cole um link válido de produto da Shopee." }, 400, origin);
+      }
+
+      const resolvedUrl = await resolveShortUrl(inputUrl);
+      const ids = extractIds(resolvedUrl);
+      if (!ids) {
+        return reply({ ok: false, error: "Não identifiquei os códigos da loja e do produto. Use o link completo do anúncio." }, 422, origin);
+      }
+
+      const result = await getShopeeItem(ids, resolvedUrl);
+      if (!result.item) {
+        return reply({
+          ok: false,
+          error: "A Shopee bloqueou a leitura automática deste anúncio. Tente novamente em alguns minutos ou cadastre manualmente.",
+          diagnostic: { shopId: ids.shopId, itemId: ids.itemId, attempts: result.attempts }
+        }, 502, origin);
+      }
+
+      const product = buildProduct(result.item, resolvedUrl);
+      if (!product.name) return reply({ ok: false, error: "O anúncio respondeu sem nome de produto." }, 502, origin);
+
+      return reply({ ok: true, product, diagnostic: { shopId: ids.shopId, itemId: ids.itemId } }, 200, origin);
     } catch (error) {
-      return json({ ok:false,error:error.message || "Erro inesperado." },500,origin);
+      return reply({ ok: false, error: error?.message || "Falha inesperada no importador." }, 500, origin);
     }
   }
 };
