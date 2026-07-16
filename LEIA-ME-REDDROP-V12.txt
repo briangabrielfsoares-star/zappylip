@@ -1,0 +1,34 @@
+RED DROP V12 — ID DA SHOPEE + MÍDIAS SEM LIMITE FIXO
+
+O QUE MUDOU
+- Campo da Shopee aceita:
+  1) ID do produto: 29692712814
+  2) ID da loja + produto: 971829971.29692712814
+  3) Link curto da Shopee
+  4) Link completo da Shopee
+- Fotos: o aplicativo não impõe mais limite fixo.
+- Vídeos: permite vários arquivos e vários links.
+- Variações: campos ampliados para cores, modelos, voltagens, tamanhos, numerações e capacidades.
+- Imagens, vídeos e variações importados são mantidos quando a Shopee disponibilizar os dados.
+
+IMPORTANTE SOBRE ID SOZINHO
+O ID do produto sozinho não contém o ID da loja. O Worker V12 tenta descobrir a loja pela busca da Shopee. Caso a Shopee bloqueie a busca, use o formato mais confiável:
+971829971.29692712814
+
+IMPORTANTE SOBRE IMAGENS
+Não existe limite definido pelo aplicativo, mas muitas imagens grandes deixam o produto lento e aumentam o uso do Firebase Storage. Comprima as fotos antes de enviar quando possível.
+
+ATUALIZAR O SITE
+1. Substitua os arquivos do repositório pelos arquivos desta pasta.
+2. Faça o commit.
+3. Aguarde o deploy do Cloudflare.
+4. Abra em aba anônima ou use Ctrl+F5.
+
+ATUALIZAR O IMPORTADOR
+1. Abra Cloudflare > Workers & Pages > eeddrop-importador.
+2. Abra Edit code.
+3. Substitua o código pelo arquivo cloudflare-worker-importador/worker.js.
+4. Clique em Deploy.
+5. Ao abrir a URL do importador, deve aparecer a versão 3.0.0.
+
+A Shopee pode continuar retornando 403, pois a leitura usa endpoints internos não oficiais. Nesses casos, o cadastro rápido continua disponível.

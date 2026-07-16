@@ -99,7 +99,7 @@ const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
 
 
 </head>
-<body data-app-version="reddrop-v9">
+<body data-app-version="reddrop-v12">
 <div id="cloudStatus" style="position:fixed;right:10px;bottom:76px;z-index:9999;padding:7px 10px;border-radius:999px;background:#166534;color:white;font-size:11px;font-weight:800;box-shadow:0 4px 16px #0003">● Firebase protegido</div>
 <header>
   <div class="toprow">
@@ -165,8 +165,8 @@ const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
   <h3 id="editorTitle">Adicionar produto</h3>
   <input type="hidden" id="productId">
   <div class="storage-info">As fotos e vídeos enviados aqui serão armazenados no Firebase Storage. Você também pode importar um anúncio da Shopee como rascunho e revisar antes de publicar.</div>
-  <div class="field"><label>Importar produto por link da Shopee</label><div class="couponline"><input id="shopeeImportUrl" placeholder="https://br.shp.ee/..."><button type="button" class="btn primary" onclick="importShopeeProduct()">Importar</button></div><div id="shopeeImportStatus" class="upload-status hidden"></div><div id="shopeeFallback" class="hidden" style="margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff7f7"><b>Cadastro rápido quando a Shopee bloquear</b><div class="field" style="margin-top:8px"><label>Nome do produto</label><input id="fallbackName" placeholder="Cole ou digite o nome do anúncio"></div><div class="two"><div class="field"><label>Preço de compra</label><input id="fallbackCost" inputmode="decimal" placeholder="59,90"></div><div class="field"><label>Categoria</label><input id="fallbackCategory" placeholder="Moda, Eletrônicos..."></div></div><div class="field"><label>Marca</label><input id="fallbackBrand" placeholder="Sem marca"></div><button type="button" class="btn primary" style="width:100%" onclick="completeShopeeFallback()">Completar produto como rascunho</button></div></div>
-  <div class="field"><label>Fotos do produto — até 8</label><input type="file" id="productImages" accept="image/*" multiple onchange="uploadProductImages()"></div>
+  <div class="field"><label>Importar da Shopee por ID ou link</label><div class="couponline"><input id="shopeeImportUrl" placeholder="ID: 29692712814 | loja.produto | link da Shopee"><button type="button" class="btn primary" onclick="importShopeeProduct()">Importar</button></div><div id="shopeeImportStatus" class="upload-status hidden"></div><div id="shopeeFallback" class="hidden" style="margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff7f7"><b>Cadastro rápido quando a Shopee bloquear</b><div class="field" style="margin-top:8px"><label>Nome do produto</label><input id="fallbackName" placeholder="Cole ou digite o nome do anúncio"></div><div class="two"><div class="field"><label>Preço de compra</label><input id="fallbackCost" inputmode="decimal" placeholder="59,90"></div><div class="field"><label>Categoria</label><input id="fallbackCategory" placeholder="Moda, Eletrônicos..."></div></div><div class="field"><label>Marca</label><input id="fallbackBrand" placeholder="Sem marca"></div><button type="button" class="btn primary" style="width:100%" onclick="completeShopeeFallback()">Completar produto como rascunho</button></div></div>
+  <div class="field"><label>Fotos do produto — sem limite fixo</label><input type="file" id="productImages" accept="image/*" multiple onchange="uploadProductImages()"></div>
   <button type="button" class="cloud-btn" onclick="uploadProductImages()">☁ Reenviar fotos selecionadas</button>
   <div id="productUploadStatus" class="upload-status hidden"></div>
   <div class="field">
@@ -188,8 +188,8 @@ const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
   <div class="two"><div class="field"><label>Categoria</label><input id="productCategory"></div><div class="field"><label>Marca</label><input id="productBrand"></div></div>
   <div class="two"><div class="field"><label>Estoque</label><input id="productStock" inputmode="numeric"></div><div class="field"><label>Vendidos</label><input id="productSold" inputmode="numeric"></div></div>
   <div class="two"><div class="field"><label>Avaliação</label><input id="productRating" placeholder="4.8"></div><div class="field"><label>Selo</label><input id="productBadge" placeholder="OFERTA"></div></div>
-  <div class="field"><label>Cores disponíveis — separadas por vírgula</label><input id="productColors" placeholder="Preto, Branco, Azul"></div>
-  <div class="field"><label>Tamanhos — separados por vírgula</label><input id="productSizes" placeholder="P, M, G, GG ou 38, 39, 40"></div>
+  <div class="field"><label>Cores / modelos / voltagens — separados por vírgula</label><input id="productColors" placeholder="Preto, Branco, Azul"></div>
+  <div class="field"><label>Tamanhos / numerações / capacidades — separados por vírgula</label><input id="productSizes" placeholder="P, M, G, GG ou 38, 39, 40"></div>
 <div class="field"><label>Medidas — uma linha por tamanho</label><textarea id="productMeasures" rows="5" placeholder="P: largura 54,73 cm; comprimento 63,29 cm; manga 61,50 cm&#10;M: largura 56,76 cm; comprimento 66,29 cm; manga 63,50 cm"></textarea><div class="notice">Use uma linha por tamanho. Dentro da linha, separe largura, comprimento e manga com ponto e vírgula.</div></div>
 <div class="two"><div class="field"><label>Status</label><select id="productActive"><option value="true">Publicado</option><option value="false">Rascunho</option></select></div><div class="field"><label>Link de origem</label><input id="productSourceUrl" placeholder="Link da Shopee ou fornecedor"></div></div>
 <div class="two"><div class="field"><label>Promoção ativa</label><select id="productPromo"><option value="true">Sim</option><option value="false">Não</option></select></div><div class="field"><label>Fim da promoção</label><input id="productPromoEnd" type="datetime-local"></div></div>
@@ -500,7 +500,7 @@ function measurementFor(p,size){
   return parsed[size]||parsed._geral||"";
 }
 function normalizeProduct(p){
-  p=p||{};p.images=[...new Set((p.images||[p.image].filter(Boolean)).filter(Boolean))].slice(0,8);p.videos=[...new Set((p.videos||[]).filter(Boolean))];p.colors=Array.isArray(p.colors)?p.colors:arr(p.colors);p.sizes=Array.isArray(p.sizes)?p.sizes:arr(p.sizes);p.active=p.active!==false;delete p.image;return p;
+  p=p||{};p.images=[...new Set((p.images||[p.image].filter(Boolean)).filter(Boolean))];p.videos=[...new Set((p.videos||[]).filter(Boolean))];p.colors=Array.isArray(p.colors)?p.colors:arr(p.colors);p.sizes=Array.isArray(p.sizes)?p.sizes:arr(p.sizes);p.active=p.active!==false;delete p.image;return p;
 }
 function firstImage(p){return (p.images&&p.images[0])||placeholder("📦","PRODUTO","#374151","#9ca3af")}
 function fileData(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
@@ -650,7 +650,7 @@ async function logoutAdmin(){
 
 
 
-function syncEditorImagesFromLinks(){editorImages=uniqueLines($("imageUrls").value).slice(0,8);renderEditorImages()}
+function syncEditorImagesFromLinks(){editorImages=uniqueLines($("imageUrls").value);renderEditorImages()}
 function clearImageLinks(){
   if(!confirm("Apagar todos os links de imagens deste produto?"))return;
   $("imageUrls").value="";editorImages=[];renderEditorImages();if($("productUploadStatus"))$("productUploadStatus").classList.add("hidden");
@@ -688,7 +688,6 @@ async function uploadProductImages(){
   const files=[...$("productImages").files];
   const existing=uniqueLines($("imageUrls").value);
   if(!files.length)return alert("Escolha pelo menos uma imagem.");
-  if(existing.length+files.length>8)return alert("O limite é de 8 fotos por produto.");
   try{
     const urls=[];
     for(let i=0;i<files.length;i++){
@@ -696,7 +695,7 @@ async function uploadProductImages(){
       const url=await uploadToFirebase(files[i],"products/images");
       urls.push(url);
     }
-    editorImages=[...new Set([...existing,...urls])].slice(0,8);
+    editorImages=[...new Set([...existing,...urls])];
     $("imageUrls").value=editorImages.join("\n");
     $("productImages").value="";
     renderEditorImages();
@@ -730,24 +729,36 @@ async function uploadProductVideos(){
 function suggestedResalePrice(cost){const margin=Math.max(0,Number(store.resaleMargin||50))/100;const raw=Number(cost||0)*(1+margin);if(!raw)return 0;return Math.max(9.9,Math.ceil(raw/5)*5-0.1)}
 function guessNameFromShopeeUrl(url){try{const u=new URL(url);const slug=decodeURIComponent(u.pathname).split("-i.")[0].replace(/^\/+/,"").replace(/-/g," ").trim();return slug?slug.replace(/\b\w/g,c=>c.toUpperCase()):""}catch(_){return ""}}
 function showShopeeFallback(url,message){$("shopeeFallback").classList.remove("hidden");$("fallbackName").value=$("fallbackName").value||guessNameFromShopeeUrl(url);$("productSourceUrl").value=url;$("productActive").value="false";setUploadStatus("shopeeImportStatus",message||"A Shopee bloqueou a leitura. Use o cadastro rápido abaixo.",true)}
-function completeShopeeFallback(){const url=$("shopeeImportUrl").value.trim();const name=$("fallbackName").value.trim();const cost=num($("fallbackCost").value);if(!url)return alert("Cole o link da Shopee.");if(!name)return alert("Digite o nome do produto.");if(!cost)return alert("Digite o preço de compra.");const resale=suggestedResalePrice(cost);$("productName").value=name;$("productPrice").value=resale.toFixed(2).replace(".",",");$("productOldPrice").value=(resale*1.25).toFixed(2).replace(".",",");$("productCategory").value=$("fallbackCategory").value.trim()||"Outros";$("productBrand").value=$("fallbackBrand").value.trim()||"Sem marca";$("productStock").value=10;$("productSold").value=0;$("productRating").value=4.8;$("productBadge").value="NOVIDADE";$("productSourceUrl").value=url;$("productActive").value="false";$("shopeeFallback").classList.add("hidden");setUploadStatus("shopeeImportStatus",`Rascunho preenchido. Venda sugerida: ${money(resale)}. Adicione fotos, cores, tamanhos e revise antes de salvar.`)}
+function completeShopeeFallback(){const raw=$("shopeeImportUrl").value.trim();const url=normalizeShopeeInput(raw).sourceUrl||raw;const name=$("fallbackName").value.trim();const cost=num($("fallbackCost").value);if(!url)return alert("Digite o ID ou cole o link da Shopee.");if(!name)return alert("Digite o nome do produto.");if(!cost)return alert("Digite o preço de compra.");const resale=suggestedResalePrice(cost);$("productName").value=name;$("productPrice").value=resale.toFixed(2).replace(".",",");$("productOldPrice").value=(resale*1.25).toFixed(2).replace(".",",");$("productCategory").value=$("fallbackCategory").value.trim()||"Outros";$("productBrand").value=$("fallbackBrand").value.trim()||"Sem marca";$("productStock").value=10;$("productSold").value=0;$("productRating").value=4.8;$("productBadge").value="NOVIDADE";$("productSourceUrl").value=url;$("productActive").value="false";$("shopeeFallback").classList.add("hidden");setUploadStatus("shopeeImportStatus",`Rascunho preenchido. Venda sugerida: ${money(resale)}. Adicione fotos, cores, tamanhos e revise antes de salvar.`)}
+function normalizeShopeeInput(value){
+  const input=String(value||"").trim();
+  if(/^\d+$/.test(input))return {input,itemId:input,sourceUrl:`https://shopee.com.br/search?keyword=${encodeURIComponent(input)}`};
+  const pair=input.match(/^(\d+)[.:/-](\d+)$/);
+  if(pair)return {input,shopId:pair[1],itemId:pair[2],sourceUrl:`https://shopee.com.br/product/${pair[1]}/${pair[2]}`};
+  if(/^https?:\/\//i.test(input))return {input,url:input,sourceUrl:input};
+  if(/shopee|shp\.ee/i.test(input))return {input,url:`https://${input.replace(/^\/+/,"")}`,sourceUrl:`https://${input.replace(/^\/+/,"")}`};
+  return {input};
+}
 async function importShopeeProduct(){
-  const url=$("shopeeImportUrl").value.trim();
-  if(!url)return alert("Cole um link da Shopee.");
+  const rawInput=$("shopeeImportUrl").value.trim();
+  if(!rawInput)return alert("Digite o ID do produto, loja.produto ou cole um link da Shopee.");
+  const parsedInput=normalizeShopeeInput(rawInput);
+  if(!parsedInput.url&&!parsedInput.itemId)return alert("Formato inválido. Use ID, loja.produto ou link da Shopee.");
+  const url=parsedInput.sourceUrl||rawInput;
   if(!store.importerUrl){setUploadStatus("shopeeImportStatus","Configure a URL do importador em Configurar loja.",true);return}
   try{
     setUploadStatus("shopeeImportStatus","Buscando informações do anúncio...");
     const importerBase=String(store.importerUrl||"").trim().replace(/\/+$/,"");
-    const response=await fetch(importerBase+"/import",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url})});
+    const response=await fetch(importerBase+"/import",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url:parsedInput.url||url,itemId:parsedInput.itemId||"",shopId:parsedInput.shopId||"",input:rawInput})});
     const rawText=await response.text();let payload={};try{payload=JSON.parse(rawText)}catch(_){payload={error:rawText||`O importador respondeu ${response.status}.`}}
     if(!response.ok||!payload.ok){const detail=payload?.diagnostic?.attempts?.map(a=>a.status||a.error).filter(Boolean).join(", ");throw new Error((payload.error||"Não foi possível importar o anúncio.")+(detail?` [${detail}]`:""));}
     const d=payload.product||{};const resale=suggestedResalePrice(d.price);
-    $("productName").value=d.name||"";$("productPrice").value=resale?resale.toFixed(2).replace(".",","):"";$("productOldPrice").value=resale?(resale*1.25).toFixed(2).replace(".",","):"";$("productCategory").value=d.category||"Outros";$("productBrand").value=d.brand||"Sem marca";$("productStock").value=10;$("productSold").value=0;$("productRating").value=d.rating||0;$("productBadge").value="NOVIDADE";$("productColors").value=(d.colors||[]).join(", ");$("productSizes").value=(d.sizes||[]).join(", ");$("productMeasures").value=d.measurements||"";$("productDescription").value=d.description||"";$("productSourceUrl").value=d.sourceUrl||url;$("productActive").value="false";editorImages=[...new Set(d.images||[])].slice(0,8);$("imageUrls").value=editorImages.join("\n");$("videoUrls").value=[...new Set(d.videos||[])].join("\n");renderEditorImages();setUploadStatus("shopeeImportStatus",`Importado como rascunho. Custo encontrado: ${money(d.price)}. Revise tudo antes de publicar.`);
+    $("productName").value=d.name||"";$("productPrice").value=resale?resale.toFixed(2).replace(".",","):"";$("productOldPrice").value=resale?(resale*1.25).toFixed(2).replace(".",","):"";$("productCategory").value=d.category||"Outros";$("productBrand").value=d.brand||"Sem marca";$("productStock").value=10;$("productSold").value=0;$("productRating").value=d.rating||0;$("productBadge").value="NOVIDADE";$("productColors").value=(d.colors||[]).join(", ");$("productSizes").value=(d.sizes||[]).join(", ");$("productMeasures").value=d.measurements||"";$("productDescription").value=d.description||"";$("productSourceUrl").value=d.sourceUrl||url;$("productActive").value="false";editorImages=[...new Set(d.images||[])];$("imageUrls").value=editorImages.join("\n");$("videoUrls").value=[...new Set(d.videos||[])].join("\n");renderEditorImages();setUploadStatus("shopeeImportStatus",`Importado como rascunho. Custo encontrado: ${money(d.price)}. Revise tudo antes de publicar.`);
   }catch(err){console.error(err);const message=String(err?.message||"");if(/403|bloqueou|failed to fetch/i.test(message)){showShopeeFallback(url,"A Shopee bloqueou a leitura automática. Preencha nome e preço de compra abaixo; o restante será calculado como rascunho.");}else{setUploadStatus("shopeeImportStatus",`Erro: ${message}`,true)}}
 }
 
-async function openEditor(id){if(!adminMode)return openAdminLogin();const p=products.find(x=>x.id===id);$("editorOverlay").style.display="flex";$("editorTitle").textContent=p?"Editar produto":"Adicionar produto";$("productId").value=p?.id||"";editorImages=[...(p?.images||[])].slice(0,8);$("imageUrls").value=editorImages.join("\n");$("videoUrls").value=(p?.videos||[]).join("\n");$("productImages").value="";$("productVideos").value="";$("productName").value=p?.name||"";$("productPrice").value=p?.price||"";$("productOldPrice").value=p?.oldPrice||"";$("productCategory").value=p?.category||"";$("productBrand").value=p?.brand||"";$("productStock").value=p?.stock??"";$("productSold").value=p?.sold??"";$("productRating").value=p?.rating??"";$("productBadge").value=p?.badge||"";$("productColors").value=(p?.colors||[]).join(", ");$("productSizes").value=(p?.sizes||[]).join(", ");$("productMeasures").value=measurementsToText(p?.measurements,p?.sizes||[]);$("productPromo").value=String(p?.promotionActive??true);$("productPromoEnd").value=p?.promotionEnd?new Date(p.promotionEnd).toISOString().slice(0,16):"";$("productDescription").value=p?.description||"";$("productActive").value=String(p?.active!==false);$("productSourceUrl").value="";$("shopeeImportUrl").value="";$("shopeeFallback")?.classList.add("hidden");$("fallbackName").value="";$("fallbackCost").value="";$("fallbackCategory").value="";$("fallbackBrand").value="";$("deleteProductBtn").style.display=p?"block":"none";renderEditorImages();if(p){const privateData=await dbGetPrivate(p.id);$("productSourceUrl").value=privateData.sourceUrl||""}}
-async function previewSelectedImages(){const files=[...$("productImages").files];if(editorImages.length+files.length>8){alert("O limite é de 8 fotos por produto.");$("productImages").value="";return}for(const f of files)editorImages.push(await fileData(f));$("productImages").value="";renderEditorImages()}
+async function openEditor(id){if(!adminMode)return openAdminLogin();const p=products.find(x=>x.id===id);$("editorOverlay").style.display="flex";$("editorTitle").textContent=p?"Editar produto":"Adicionar produto";$("productId").value=p?.id||"";editorImages=[...(p?.images||[])];$("imageUrls").value=editorImages.join("\n");$("videoUrls").value=(p?.videos||[]).join("\n");$("productImages").value="";$("productVideos").value="";$("productName").value=p?.name||"";$("productPrice").value=p?.price||"";$("productOldPrice").value=p?.oldPrice||"";$("productCategory").value=p?.category||"";$("productBrand").value=p?.brand||"";$("productStock").value=p?.stock??"";$("productSold").value=p?.sold??"";$("productRating").value=p?.rating??"";$("productBadge").value=p?.badge||"";$("productColors").value=(p?.colors||[]).join(", ");$("productSizes").value=(p?.sizes||[]).join(", ");$("productMeasures").value=measurementsToText(p?.measurements,p?.sizes||[]);$("productPromo").value=String(p?.promotionActive??true);$("productPromoEnd").value=p?.promotionEnd?new Date(p.promotionEnd).toISOString().slice(0,16):"";$("productDescription").value=p?.description||"";$("productActive").value=String(p?.active!==false);$("productSourceUrl").value="";$("shopeeImportUrl").value="";$("shopeeFallback")?.classList.add("hidden");$("fallbackName").value="";$("fallbackCost").value="";$("fallbackCategory").value="";$("fallbackBrand").value="";$("deleteProductBtn").style.display=p?"block":"none";renderEditorImages();if(p){const privateData=await dbGetPrivate(p.id);$("productSourceUrl").value=privateData.sourceUrl||""}}
+async function previewSelectedImages(){const files=[...$("productImages").files];for(const f of files)editorImages.push(await fileData(f));$("productImages").value="";$("imageUrls").value=[...new Set(editorImages)].join("\n");renderEditorImages()}
 function renderEditorImages(){$("imagePreview").innerHTML=editorImages.map((img,i)=>`<div><img src="${img}"><button onclick="removeEditorImage(${i})">×</button></div>`).join("")}
 function removeEditorImage(i){editorImages.splice(i,1);$("imageUrls").value=editorImages.join("\n");renderEditorImages()}
 function closeEditor(){closeOverlay("editorOverlay");$("productImages").value=""}
@@ -755,10 +766,6 @@ async function saveProduct(){
   if(!adminMode)return;
   try{
     const links=$("imageUrls").value.split("\n").map(x=>x.trim()).filter(Boolean);
-    if(links.length>8){
-      alert("Use no máximo 8 fotos por produto.");
-      return;
-    }
     const id=Number($("productId").value)||Date.now();
     const old=products.find(x=>x.id===id);
     const sourceUrl=$("productSourceUrl").value.trim();

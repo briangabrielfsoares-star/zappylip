@@ -34,6 +34,7 @@ function extractIds(input) {
   let decoded = String(input || "");
   try { decoded = decodeURIComponent(decoded); } catch (_) {}
   const patterns = [
+    /^(\d+)[.:/-](\d+)$/,
     /-i\.(\d+)\.(\d+)/i,
     /[?&]shopid=(\d+).*?[?&]itemid=(\d+)/i,
     /[?&]shop_id=(\d+).*?[?&]item_id=(\d+)/i,
@@ -43,6 +44,8 @@ function extractIds(input) {
     const match = decoded.match(pattern);
     if (match) return { shopId: match[1], itemId: match[2] };
   }
+  const itemOnly = decoded.trim().match(/^\d+$/);
+  if (itemOnly) return { shopId: "", itemId: itemOnly[0] };
   return null;
 }
 
@@ -80,25 +83,49 @@ function normalizeItem(raw) {
 }
 
 async function getShopeeItem(ids, referer) {
+  const attempts = [];
+  if (!ids.shopId) {
+    const found = await findShopByItemId(ids.itemId, referer);
+    attempts.push(found.attempt);
+    if (found.shopId) ids = { shopId: found.shopId, itemId: found.itemId };
+  }
+  if (!ids.shopId) return { item: null, attempts, resolvedIds: ids };
   const endpoints = [
     `https://shopee.com.br/api/v4/pdp/get_pc?item_id=${ids.itemId}&shop_id=${ids.shopId}`,
     `https://shopee.com.br/api/v4/item/get?itemid=${ids.itemId}&shopid=${ids.shopId}`,
     `https://mall.shopee.com.br/api/v4/item/get?itemid=${ids.itemId}&shopid=${ids.shopId}`
   ];
-  const attempts = [];
   for (const endpoint of endpoints) {
     try {
       const result = await fetchJson(endpoint, referer);
       attempts.push({ endpoint, status: result.response.status });
       if (result.response.ok) {
         const item = normalizeItem(result.data);
-        if (item?.name) return { item, attempts };
+        if (item?.name) return { item, attempts, resolvedIds: ids };
       }
     } catch (error) {
       attempts.push({ endpoint, error: error.message });
     }
   }
-  return { item: null, attempts };
+  return { item: null, attempts, resolvedIds: ids };
+}
+
+
+async function findShopByItemId(itemId, referer) {
+  const endpoint = `https://shopee.com.br/api/v4/search/search_items?by=relevancy&keyword=${encodeURIComponent(itemId)}&limit=20&newest=0&order=desc&page_type=search&scenario=PAGE_GLOBAL_SEARCH&version=2`;
+  try {
+    const result = await fetchJson(endpoint, referer || "https://shopee.com.br/");
+    const items = result.data?.items || result.data?.data?.items || [];
+    for (const entry of items) {
+      const basic = entry.item_basic || entry.item || entry;
+      if (String(basic.itemid || basic.item_id || "") === String(itemId)) {
+        return { shopId: String(basic.shopid || basic.shop_id || ""), itemId: String(itemId), attempt: { endpoint, status: result.response.status } };
+      }
+    }
+    return { shopId: "", itemId: String(itemId), attempt: { endpoint, status: result.response.status } };
+  } catch (error) {
+    return { shopId: "", itemId: String(itemId), attempt: { endpoint, error: error.message } };
+  }
 }
 
 function attributeValue(item, names) {
@@ -157,7 +184,7 @@ function categoryName(item) {
 function buildProduct(item, sourceUrl) {
   const variations = parseVariations(item);
   const rawImages = item.images || item.image_list || (item.image ? [item.image] : []);
-  const images = unique(rawImages.map(imageUrl)).slice(0, 8);
+  const images = unique(rawImages.map(imageUrl));
   const price = shopeePrice(item.price_min || item.price || item.price_max || item.models?.[0]?.price);
   const oldPrice = shopeePrice(item.price_before_discount || item.price_max_before_discount || item.price_min_before_discount);
   const rating = Number(item.item_rating?.rating_star || item.rating_star || item.rating || 0);
@@ -190,7 +217,7 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { headers: cors(origin) });
 
     if (request.method === "GET" && (route.pathname === "/" || route.pathname === "/health")) {
-      return reply({ ok: true, service: "RedDrop Importador Shopee", version: "2.0.0", route: "POST /import" }, 200, origin);
+      return reply({ ok: true, service: "RedDrop Importador Shopee", version: "3.0.0", route: "POST /import" }, 200, origin);
     }
 
     if (request.method !== "POST" || route.pathname !== "/import") {
@@ -199,15 +226,18 @@ export default {
 
     try {
       const body = await request.json().catch(() => ({}));
-      const inputUrl = cleanText(body.url);
-      if (!/^https?:\/\//i.test(inputUrl) || !/shopee|shp\.ee/i.test(inputUrl)) {
-        return reply({ ok: false, error: "Cole um link válido de produto da Shopee." }, 400, origin);
+      const rawInput = cleanText(body.input || body.url || body.itemId);
+      const suppliedItemId = cleanText(body.itemId);
+      const suppliedShopId = cleanText(body.shopId);
+      if (!rawInput && !suppliedItemId) {
+        return reply({ ok: false, error: "Digite o ID do produto, loja.produto ou cole um link da Shopee." }, 400, origin);
       }
 
-      const resolvedUrl = await resolveShortUrl(inputUrl);
-      const ids = extractIds(resolvedUrl);
+      const inputUrl = /^https?:\/\//i.test(cleanText(body.url)) ? cleanText(body.url) : "";
+      const resolvedUrl = inputUrl ? await resolveShortUrl(inputUrl) : `https://shopee.com.br/search?keyword=${encodeURIComponent(suppliedItemId || rawInput)}`;
+      const ids = suppliedItemId ? { shopId: suppliedShopId, itemId: suppliedItemId } : extractIds(rawInput || resolvedUrl);
       if (!ids) {
-        return reply({ ok: false, error: "Não identifiquei os códigos da loja e do produto. Use o link completo do anúncio." }, 422, origin);
+        return reply({ ok: false, error: "Não identifiquei o produto. Use o ID, loja.produto ou um link da Shopee." }, 422, origin);
       }
 
       const result = await getShopeeItem(ids, resolvedUrl);
@@ -215,14 +245,14 @@ export default {
         return reply({
           ok: false,
           error: "A Shopee bloqueou a leitura automática deste anúncio. Tente novamente em alguns minutos ou cadastre manualmente.",
-          diagnostic: { shopId: ids.shopId, itemId: ids.itemId, attempts: result.attempts }
+          diagnostic: { shopId: result.resolvedIds?.shopId || ids.shopId, itemId: ids.itemId, attempts: result.attempts }
         }, 502, origin);
       }
 
       const product = buildProduct(result.item, resolvedUrl);
       if (!product.name) return reply({ ok: false, error: "O anúncio respondeu sem nome de produto." }, 502, origin);
 
-      return reply({ ok: true, product, diagnostic: { shopId: ids.shopId, itemId: ids.itemId } }, 200, origin);
+      return reply({ ok: true, product, diagnostic: { shopId: result.resolvedIds?.shopId || ids.shopId, itemId: ids.itemId } }, 200, origin);
     } catch (error) {
       return reply({ ok: false, error: error?.message || "Falha inesperada no importador." }, 500, origin);
     }
