@@ -7,17 +7,17 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="theme-color" content="#e50914" id="themeMeta">
-<title>RedDrop</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="application-name" content="RedDrop">
-<meta name="apple-mobile-web-app-title" content="RedDrop">
+<title>RED DROP</title>
+<link rel="manifest" href="manifest-reddrop-v9.json?v=9">
+<link rel="icon" type="image/png" sizes="192x192" href="reddrop-icon-192-v9.png?v=9">
+<link rel="icon" type="image/png" sizes="512x512" href="reddrop-icon-512-v9.png?v=9">
+<link rel="apple-touch-icon" href="reddrop-icon-192-v9.png?v=9">
+<meta name="application-name" content="RED DROP">
+<meta name="apple-mobile-web-app-title" content="RED DROP">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="description" content="RedDrop — seu estilo favorito sem frete absurdo.">
+<meta name="description" content="RED DROP — seu estilo favorito sem frete absurdo.">
 <style>
 :root{
   --brand:#e50914;--brand2:#8b0000;--bg:#f4f4f5;--card:#ffffff;--text:#161618;
@@ -99,11 +99,11 @@ const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
 
 
 </head>
-<body>
+<body data-app-version="reddrop-v9">
 <div id="cloudStatus" style="position:fixed;right:10px;bottom:76px;z-index:9999;padding:7px 10px;border-radius:999px;background:#166534;color:white;font-size:11px;font-weight:800;box-shadow:0 4px 16px #0003">● Firebase protegido</div>
 <header>
   <div class="toprow">
-    <div class="brandbox"><img class="logo" id="brandLogo" src="icon-192.png" alt="Logo" onerror="this.onerror=null;this.src='icon-192.png'"><div><div class="brand" id="brandName">RED DROP</div><div class="tag" id="brandTag">Seu estilo sem frete absurdo</div></div></div>
+    <div class="brandbox"><img class="logo" id="brandLogo" src="reddrop-logo-v9.png?v=9" alt="Logo RED DROP" onerror="this.onerror=null;this.src='reddrop-logo-v9.png?v=9'"><div><div class="brand" id="brandName">RED DROP</div><div class="tag" id="brandTag">Seu estilo sem frete absurdo</div></div></div>
     <button class="iconbtn" onclick="openChat()">💬</button><button class="iconbtn" onclick="openAdminLogin()">⚙</button>
   </div>
   <div class="search"><span>🔎</span><input id="searchInput" placeholder="Buscar produtos..." oninput="renderProducts()"></div>
@@ -305,7 +305,7 @@ const ADMIN_EMAIL="briangabrielfsoares@gmail.com";
 <div class="overlay" id="ordersOverlay"><div class="sheet" id="ordersSheet"></div></div>
 <div class="overlay" id="chatOverlay"><div class="sheet" id="chatSheet"></div></div>
 <script>
-const DB_NAME="zappylip_database",DB_VERSION=1,PRODUCT_STORE="products";
+const DB_NAME="reddrop_database",DB_VERSION=1,PRODUCT_STORE="products";
 const $=id=>document.getElementById(id);
 const placeholder=(emoji,label,a,b)=>"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="800" height="800" fill="url(#g)"/><text x="400" y="390" text-anchor="middle" font-size="170">${emoji}</text><text x="400" y="620" text-anchor="middle" font-family="Arial" font-size="46" fill="white" font-weight="700">${label}</text></svg>`);
 const defaults=[
@@ -318,7 +318,7 @@ const defaults=[
 ];
 let db,products=[];
 let store=JSON.parse(localStorage.getItem("v4_store")||"null")||{brand:"RED DROP",tag:"Seu estilo sem frete absurdo",heroTitle:"Seu estilo favorito sem frete absurdo",heroText:"Ofertas selecionadas, compra segura e envio para todo o Brasil.",whatsapp:"",pix:"",shipping:12,freeShipping:150,resaleMargin:50,importerUrl:""};
-let design=JSON.parse(localStorage.getItem("v4_design")||"null")||{brand:"#e50914",brand2:"#8b0000",bg:"#f4f4f5",card:"#ffffff",text:"#161618",hero1:"#09090b",hero2:"#3f0a0d",logo:"icon-192.png",heroImage:""};
+let design=JSON.parse(localStorage.getItem("v4_design")||"null")||{brand:"#e50914",brand2:"#8b0000",bg:"#f4f4f5",card:"#ffffff",text:"#161618",hero1:"#09090b",hero2:"#3f0a0d",logo:"reddrop-logo-v9.png?v=9",heroImage:""};
 let cart=JSON.parse(localStorage.getItem("v4_cart")||"[]"),favorites=JSON.parse(localStorage.getItem("v4_favorites")||"[]");
 let coupons=JSON.parse(localStorage.getItem("v4_coupons")||"null")||[
   {code:"BARATO10",type:"percent",value:10,minimum:0,maxDiscount:0,category:"",expiry:"",usageLimit:0,used:0,description:"10% de desconto"}
@@ -506,9 +506,9 @@ function firstImage(p){return (p.images&&p.images[0])||placeholder("📦","PRODU
 function fileData(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
 function closeOverlay(id){$(id).style.display="none"}
 
-function applyDesign(){const r=document.documentElement.style;r.setProperty("--brand",design.brand);r.setProperty("--brand2",design.brand2);r.setProperty("--bg",design.bg);r.setProperty("--card",design.card);r.setProperty("--text",design.text);r.setProperty("--hero1",design.hero1);r.setProperty("--hero2",design.hero2);$("brandLogo").src=design.logo||"icon-192.png";$("hero").style.backgroundImage=design.heroImage?`linear-gradient(180deg,transparent 10%,rgba(0,0,0,.18)),url("${design.heroImage}")`:"";$("themeMeta").content=design.brand}
-function renderStore(){$("brandName").textContent=store.brand;$("brandTag").textContent=store.tag;$("heroTitle").textContent=store.heroTitle;$("heroText").textContent=store.heroText;document.title=store.brand||"RedDrop"}
-function migrateLegacyBrand(){const legacy=String(store.brand||"").toLowerCase();if(legacy==="zappylip"||legacy==="zappylip v7"){store={...store,brand:"RED DROP",tag:"Seu estilo sem frete absurdo",heroTitle:"Seu estilo favorito sem frete absurdo",heroText:"Ofertas selecionadas, compra segura e envio para todo o Brasil.",resaleMargin:store.resaleMargin??50,importerUrl:store.importerUrl||""}}if(design.brand==="#ff5a1f"){design={...design,brand:"#e50914",brand2:"#8b0000",hero1:"#09090b",hero2:"#3f0a0d",logo:"icon-192.png"}}}
+function applyDesign(){const r=document.documentElement.style;r.setProperty("--brand",design.brand);r.setProperty("--brand2",design.brand2);r.setProperty("--bg",design.bg);r.setProperty("--card",design.card);r.setProperty("--text",design.text);r.setProperty("--hero1",design.hero1);r.setProperty("--hero2",design.hero2);$("brandLogo").src=design.logo||"reddrop-logo-v9.png?v=9";$("hero").style.backgroundImage=design.heroImage?`linear-gradient(180deg,transparent 10%,rgba(0,0,0,.18)),url("${design.heroImage}")`:"";$("themeMeta").content=design.brand}
+function renderStore(){$("brandName").textContent=store.brand;$("brandTag").textContent=store.tag;$("heroTitle").textContent=store.heroTitle;$("heroText").textContent=store.heroText;document.title="RED DROP"}
+function migrateLegacyBrand(){const legacy=String(store.brand||"").trim().toLowerCase();const oldLogo=String(design.logo||"").toLowerCase();store={...store,brand:"RED DROP"};if(!store.tag||legacy.includes("zappy"))store.tag="Seu estilo sem frete absurdo";if(!store.heroTitle||legacy.includes("zappy"))store.heroTitle="Seu estilo favorito sem frete absurdo";if(!store.heroText||legacy.includes("zappy"))store.heroText="Ofertas selecionadas, compra segura e envio para todo o Brasil.";if(design.brand==="#ff5a1f"||legacy.includes("zappy")){design={...design,brand:"#e50914",brand2:"#8b0000",hero1:"#09090b",hero2:"#3f0a0d"}}if(!design.logo||oldLogo.includes("zappy")||oldLogo.includes("icon-192")||oldLogo.includes("orange")){design.logo="reddrop-logo-v9.png?v=9"}localStorage.setItem("reddrop_brand_version","v9")}
 function renderCategories(){$("categories").innerHTML=["Todos",...categoryData].map(c=>`<button class="cat ${c===currentCategory&&!favoritesOnly?'active':''}" onclick="setCategory(${htmlJs(c)})">${c}</button>`).join("")}
 function setCategory(c){currentCategory=c;favoritesOnly=false;$("sectionTitle").textContent=c==="Todos"?"Produtos para você":c;renderCategories();renderProducts()}
 function showAll(){favoritesOnly=false;currentCategory="Todos";$("sectionTitle").textContent="Produtos para você";renderCategories();renderProducts();window.scrollTo({top:0,behavior:"smooth"})}
@@ -798,7 +798,7 @@ async function saveProduct(){
 async function deleteProduct(){const id=Number($("productId").value);if(confirm("Excluir este produto?")){await dbDelete(id);await dbDeletePrivate(id);products=await dbGetAll();cart=cart.filter(x=>x.id!==id);favorites=favorites.filter(x=>x!==id);persistSmall();closeEditor();renderCategories();renderProducts();updateCounts()}}
 
 function openSettings(){if(!adminMode)return;$("setBrand").value=store.brand;$("setTag").value=store.tag;$("setHeroTitle").value=store.heroTitle;$("setHeroText").value=store.heroText;$("setWhatsapp").value=store.whatsapp;$("setPix").value=store.pix;$("setShipping").value=store.shipping;$("setFreeShipping").value=store.freeShipping;$("setResaleMargin").value=store.resaleMargin??50;$("setImporterUrl").value=store.importerUrl||"";$("settingsOverlay").style.display="flex"}
-function saveSettings(){store={...store,brand:$("setBrand").value.trim()||"RED DROP",tag:$("setTag").value.trim(),heroTitle:$("setHeroTitle").value.trim(),heroText:$("setHeroText").value.trim(),whatsapp:$("setWhatsapp").value.replace(/\D/g,""),pix:$("setPix").value.trim(),shipping:num($("setShipping").value),freeShipping:num($("setFreeShipping").value),resaleMargin:Number($("setResaleMargin").value)||50,importerUrl:$("setImporterUrl").value.trim().replace(/\/$/,"")};persistSmall();renderStore();closeOverlay("settingsOverlay");alert("Configurações salvas.")}
+function saveSettings(){store={...store,brand:"RED DROP",tag:$("setTag").value.trim(),heroTitle:$("setHeroTitle").value.trim(),heroText:$("setHeroText").value.trim(),whatsapp:$("setWhatsapp").value.replace(/\D/g,""),pix:$("setPix").value.trim(),shipping:num($("setShipping").value),freeShipping:num($("setFreeShipping").value),resaleMargin:Number($("setResaleMargin").value)||50,importerUrl:$("setImporterUrl").value.trim().replace(/\/$/,"")};persistSmall();renderStore();closeOverlay("settingsOverlay");alert("Configurações salvas.")}
 function openDesign(){if(!adminMode)return;$("colorBrand").value=design.brand;$("colorBrand2").value=design.brand2;$("colorBg").value=design.bg;$("colorCard").value=design.card;$("colorText").value=design.text;$("colorHero1").value=design.hero1;$("colorHero2").value=design.hero2;$("designLogo").value="";$("designHero").value="";$("designOverlay").style.display="flex"}
 
 async function uploadDesignMedia(type){
@@ -819,7 +819,7 @@ async function uploadDesignMedia(type){
 }
 
 async function saveDesign(){design.brand=$("colorBrand").value;design.brand2=$("colorBrand2").value;design.bg=$("colorBg").value;design.card=$("colorCard").value;design.text=$("colorText").value;design.hero1=$("colorHero1").value;design.hero2=$("colorHero2").value;persistSmall();applyDesign();closeOverlay("designOverlay");alert("Design atualizado.")}
-function resetDesign(){if(!confirm("Restaurar as cores e imagens padrão?"))return;design={brand:"#e50914",brand2:"#8b0000",bg:"#f4f4f5",card:"#ffffff",text:"#161618",hero1:"#09090b",hero2:"#3f0a0d",logo:"icon-192.png",heroImage:""};persistSmall();applyDesign();openDesign()}
+function resetDesign(){if(!confirm("Restaurar as cores e imagens padrão?"))return;design={brand:"#e50914",brand2:"#8b0000",bg:"#f4f4f5",card:"#ffffff",text:"#161618",hero1:"#09090b",hero2:"#3f0a0d",logo:"reddrop-logo-v9.png?v=9",heroImage:""};persistSmall();applyDesign();openDesign()}
 
 function openCoupons(){
   $("couponOverlay").style.display="flex";
@@ -898,7 +898,7 @@ function renderCategoryList(){$("categoryList").innerHTML=categoryData.map(c=>`<
 function removeCategory(c){categoryData=categoryData.filter(x=>x!==c);persistSmall();renderCategoryList();renderCategories()}
 
 async function exportBackup(){const data={version:8,products,store,design,cart,favorites,coupons,categories:categoryData};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backup-reddrop-completo.json";a.click();URL.revokeObjectURL(a.href)}
-function importBackup(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=JSON.parse(r.result);if(d.products){for(const p of d.products){p.images=p.images||[p.image].filter(Boolean);p.colors=p.colors||[];p.sizes=p.sizes||[];delete p.image;await dbPut(p)}products=await dbGetAll()}store=d.store||store;design=d.design||design;cart=d.cart||[];favorites=d.favorites||[];coupons=d.coupons||[];categoryData=d.categories||categoryData;persistSmall();applyDesign();renderStore();renderCategories();renderProducts();updateCounts();alert("Backup importado.")}catch(err){console.error(err);alert("Arquivo inválido.")}};r.readAsText(f);e.target.value=""}
+function importBackup(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=JSON.parse(r.result);if(d.products){for(const p of d.products){p.images=p.images||[p.image].filter(Boolean);p.colors=p.colors||[];p.sizes=p.sizes||[];delete p.image;await dbPut(p)}products=await dbGetAll()}store=d.store||store;design=d.design||design;migrateLegacyBrand();cart=d.cart||[];favorites=d.favorites||[];coupons=d.coupons||[];categoryData=d.categories||categoryData;persistSmall();applyDesign();renderStore();renderCategories();renderProducts();updateCounts();alert("Backup importado.")}catch(err){console.error(err);alert("Arquivo inválido.")}};r.readAsText(f);e.target.value=""}
 
 document.querySelectorAll(".overlay").forEach(el=>el.addEventListener("click",e=>{if(e.target===el)el.style.display="none"}));
 $("adminPassword").addEventListener("keydown",e=>{if(e.key==="Enter")checkAdmin()});

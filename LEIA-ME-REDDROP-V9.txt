@@ -1,0 +1,27 @@
+RED DROP V9 — NOME E IMAGENS CORRIGIDOS
+
+ALTERAÇÕES
+- Nome visível fixado como RED DROP no site.
+- Nome de instalação do aplicativo/PWA alterado para RED DROP.
+- Logo do cabeçalho trocada pela gota vermelha.
+- Ícones 192x192 e 512x512 recriados com nomes novos para evitar cache antigo.
+- Manifesto versionado para o Android reconhecer a nova identidade.
+- Configurações antigas com Zappylip são migradas sem apagar produtos, pedidos ou usuários.
+- O identificador técnico do Firebase continua sendo zappylib. Não altere isso, pois é o projeto do banco e não aparece para o cliente.
+
+COMO PUBLICAR
+1. Faça backup do repositório atual.
+2. Substitua os arquivos do repositório pelos arquivos desta pasta.
+3. Faça commit: RED DROP V9 - corrigir nome e identidade visual
+4. Aguarde o Cloudflare concluir o deploy.
+5. Abra o site em aba anônima e confirme que aparece RED DROP.
+
+NO CELULAR
+O Android mantém o nome e o ícone antigos em cache. Depois do deploy:
+1. Desinstale/remova o aplicativo Zappylip da tela inicial.
+2. No Chrome, abra Configurações > Privacidade > Limpar dados de navegação e limpe imagens/arquivos em cache do site, ou abra o endereço com ?app=reddrop-v9.
+3. Abra o site atualizado.
+4. Use Adicionar à tela inicial/Instalar app novamente.
+
+IMPORTANTE
+Publicar esses arquivos não apaga produtos do Firestore.
